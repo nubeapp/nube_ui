@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/nube.iml" filepath="$PROJECT_DIR$/nube.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/nube_android.iml" filepath="$PROJECT_DIR$/android/nube_android.iml" />
+    </modules>
+  </component>
+</project>
