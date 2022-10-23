@@ -1,6 +1,3 @@
-import 'package:nube/utils.dart';
-import 'package:nube/widgets/error_message.dart';
-
 import '../../imports.dart';
 import 'package:flutter/material.dart';
 
@@ -51,7 +48,7 @@ class _MainRegisterScreenState extends State<MainRegisterScreen> {
                 Text(
                   'Nuevo usuario',
                   style: TextStyle(
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).highlightColor,
                     fontFamily: 'Tw Cen MT Condensed',
                     fontSize: 38.0,
                     fontWeight: FontWeight.bold,
@@ -64,7 +61,7 @@ class _MainRegisterScreenState extends State<MainRegisterScreen> {
                 Text(
                   '🔥',
                   style: TextStyle(
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).highlightColor,
                     fontFamily: 'Tw Cen MT Condensed',
                     fontSize: 26.0,
                     fontWeight: FontWeight.bold,
@@ -206,7 +203,7 @@ class _MainRegisterScreenState extends State<MainRegisterScreen> {
                   child: Text(
                     'Iniciar sesión',
                     style: TextStyle(
-                      color: Theme.of(context).accentColor,
+                      color: Theme.of(context).highlightColor,
                       fontFamily: 'Tw Cen MT Regular',
                       fontSize: 12.0,
                       fontWeight: FontWeight.w600,

@@ -1,6 +1,3 @@
-import 'package:nube/utils.dart';
-import 'package:nube/widgets/error_message.dart';
-
 import '../../imports.dart';
 import 'package:flutter/material.dart';
 
@@ -80,13 +77,13 @@ class _PasswordRegisterScreenState extends State<PasswordRegisterScreen> {
               },
               onPressed: () {
                 setState(() {
-                  if (!isEmpty(_passwordController.text)) {
+                  if (_passwordController.text.isNotEmpty) {
                     _updatePasswordVisibility("PASSWORD");
                   }
                 });
               },
               suffixIcon:
-                  !isEmpty(_passwordController.text) ? (passwordVisibility["PASSWORD"]! ? Icons.visibility_off_outlined : Icons.visibility_outlined) : null,
+                  _passwordController.text.isNotEmpty ? (passwordVisibility["PASSWORD"]! ? Icons.visibility_off_outlined : Icons.visibility_outlined) : null,
             ),
             SizedBox(
               width: width(context),
@@ -141,13 +138,13 @@ class _PasswordRegisterScreenState extends State<PasswordRegisterScreen> {
               },
               onPressed: () {
                 setState(() {
-                  if (!isEmpty(_rPasswordController.text)) {
+                  if (_rPasswordController.text.isNotEmpty) {
                     _updatePasswordVisibility("RPASSWORD");
                   }
                 });
               },
               suffixIcon:
-                  !isEmpty(_rPasswordController.text) ? (passwordVisibility["RPASSWORD"]! ? Icons.visibility_off_outlined : Icons.visibility_outlined) : null,
+                  _rPasswordController.text.isNotEmpty ? (passwordVisibility["RPASSWORD"]! ? Icons.visibility_off_outlined : Icons.visibility_outlined) : null,
             ),
             SizedBox(
               width: width(context),
@@ -208,16 +205,16 @@ void _updatePasswordVisibility(String password) {
 
 void _updateContainerColor(Strength strength) {
   switch (strength) {
-    case Strength.EMPTY:
+    case Strength.empty:
       _updateMap(false, false, false);
       break;
-    case Strength.EASY:
+    case Strength.easy:
       _updateMap(true, false, false);
       break;
-    case Strength.MEDIUM:
+    case Strength.medium:
       _updateMap(true, true, false);
       break;
-    case Strength.HARD:
+    case Strength.hard:
       _updateMap(true, true, true);
       break;
   }

@@ -23,7 +23,7 @@ class NumberButton extends StatelessWidget {
         child: Text(
           text,
           style: TextStyle(
-            color: Theme.of(context).cursorColor,
+            color: Theme.of(context).indicatorColor,
             fontFamily: 'Tw Cen MT Regular',
             fontSize: 28.0,
             fontWeight: FontWeight.normal,

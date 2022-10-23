@@ -23,7 +23,7 @@ class CustomIconButton extends StatelessWidget {
         ),
         child: Icon(
           icon,
-          color: Theme.of(context).accentColor,
+          color: Theme.of(context).highlightColor,
         ),
       ),
     );
