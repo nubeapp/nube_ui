@@ -16,7 +16,7 @@ class Button extends StatelessWidget {
       child: TextButton(
         onPressed: onPressed,
         style: TextButton.styleFrom(
-          backgroundColor: Theme.of(context).accentColor,
+          backgroundColor: Theme.of(context).highlightColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
           ),

@@ -1,8 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:nube/imports.dart';
-import 'package:nube/widgets/verification_input_field.dart';
 
 class VerificationRegisterScreen extends StatefulWidget {
   const VerificationRegisterScreen({Key? key}) : super(key: key);
@@ -303,7 +300,7 @@ class _VerificationRegisterScreenState extends State<VerificationRegisterScreen>
                     child: Text(
                       'Reenviar',
                       style: TextStyle(
-                        color: Theme.of(context).accentColor,
+                        color: Theme.of(context).highlightColor,
                         fontFamily: 'Tw Cen MT Regular',
                         fontSize: 12.0,
                         fontWeight: FontWeight.w600,
@@ -741,7 +738,8 @@ class _VerificationRegisterScreenState extends State<VerificationRegisterScreen>
                     child: IconButton(
                       icon: const Icon(Icons.check),
                       iconSize: 36.0,
-                      color: Theme.of(context).accentColor,
+                      splashRadius: 0.01,
+                      color: Theme.of(context).highlightColor,
                       onPressed: () => log('Hecho'),
                     ),
                   ),
@@ -795,8 +793,9 @@ class _VerificationRegisterScreenState extends State<VerificationRegisterScreen>
                     child: IconButton(
                         icon: const Icon(Icons.backspace_outlined),
                         iconSize: 28.0,
-                        // color: AppColors.inputTextColorLight,
-                        color: Theme.of(context).cursorColor,
+                        splashColor: Colors.transparent,
+                        splashRadius: 0.01,
+                        color: Theme.of(context).indicatorColor,
                         onPressed: () {
                           setState(() {
                             switch (currentFocus) {
@@ -861,7 +860,7 @@ class _VerificationRegisterScreenState extends State<VerificationRegisterScreen>
                 child: Text(
                   'Cancelar',
                   style: TextStyle(
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).highlightColor,
                     fontFamily: 'Tw Cen MT Regular',
                     fontSize: 12.0,
                     fontWeight: FontWeight.w600,

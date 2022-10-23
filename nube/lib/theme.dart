@@ -28,25 +28,26 @@ abstract class AppTheme {
   static final visualDensity = VisualDensity.adaptivePlatformDensity;
 
   static ThemeData light() => ThemeData(
-      brightness: Brightness.light,
-      accentColor: _LightColors.accent,
-      visualDensity: visualDensity,
-      textTheme: const TextTheme(
-        headline6: TextStyle(
-          color: AppColors.textLight,
+        brightness: Brightness.light,
+        visualDensity: visualDensity,
+        textTheme: const TextTheme(
+          headline6: TextStyle(
+            color: AppColors.textLight,
+          ),
         ),
-      ),
-      backgroundColor: _LightColors.background,
-      scaffoldBackgroundColor: _LightColors.background,
-      cardColor: _LightColors.input,
-      iconTheme: const IconThemeData(color: AppColors.iconLight),
-      errorColor: AppColors.error,
-      cursorColor: AppColors.inputTextLight,
-      primaryColor: AppColors.textLight);
+        backgroundColor: _LightColors.background,
+        scaffoldBackgroundColor: _LightColors.background,
+        cardColor: _LightColors.input,
+        iconTheme: const IconThemeData(color: AppColors.iconLight),
+        errorColor: AppColors.error,
+        indicatorColor: AppColors.inputTextLight,
+        primaryColor: AppColors.textLight,
+        highlightColor: _LightColors.accent,
+      );
 
   static ThemeData dark() => ThemeData(
         brightness: Brightness.dark,
-        accentColor: _DarkColors.accent,
+        highlightColor: _DarkColors.accent,
         visualDensity: visualDensity,
         textTheme: const TextTheme(
           headline6: TextStyle(
@@ -58,7 +59,7 @@ abstract class AppTheme {
         cardColor: _DarkColors.input,
         iconTheme: const IconThemeData(color: AppColors.iconDark),
         errorColor: AppColors.error,
-        cursorColor: AppColors.inputTextDark,
+        indicatorColor: AppColors.inputTextDark,
         primaryColor: AppColors.textDark,
       );
 }

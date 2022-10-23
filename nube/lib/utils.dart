@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nube/imports.dart';
 import 'dart:core';
 
 Route createRoute(Widget route) {
@@ -24,10 +23,6 @@ bool isValidEmail(String? email) {
   return (email!.isNotEmpty && RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}').hasMatch(email));
 }
 
-bool isEmpty(String text) {
-  return text == '';
-}
-
 /// Password Checks
 
 Strength checkPasswordStrength(String password) {
@@ -43,21 +38,21 @@ Strength checkPasswordStrength(String password) {
      */
     //  Si tiene minúsculas, mayúsculas, números y especiales -> HARD
     if ((_hasMinus(password) && _hasMayus(password) && _hasNumbers(password) && _hasSpecialCharacters(password))) {
-      return Strength.HARD;
+      return Strength.hard;
     } else if ((_hasMinus(password) && _hasMayus(password) && _hasNumbers(password)) ||
         (_hasMinus(password) && _hasMayus(password) && _hasSpecialCharacters(password)) ||
         (_hasMinus(password) && _hasNumbers(password) && _hasSpecialCharacters(password)) ||
         (_hasMayus(password) && _hasNumbers(password) && _hasSpecialCharacters(password))) {
-      return Strength.MEDIUM;
+      return Strength.medium;
     } else if ((_hasMinus(password) && _hasMayus(password)) ||
         (_hasMinus(password) && _hasNumbers(password)) ||
         (_hasMayus(password) && _hasNumbers(password)) ||
         (_hasMinus(password) && _hasSpecialCharacters(password)) ||
         (_hasMayus(password) && _hasSpecialCharacters(password)) ||
         (_hasNumbers(password) && _hasSpecialCharacters(password))) {
-      return Strength.EASY;
+      return Strength.easy;
     } else {
-      return Strength.EMPTY;
+      return Strength.empty;
     }
   } else if (password.length >= 7 && password.length < 12) {
     //  Si tiene 'minúsculas' o 'mayúsculas' o 'números' o 'especiales' -> EASY
@@ -67,40 +62,40 @@ Strength checkPasswordStrength(String password) {
      */
     //  else -> HARD
     if (_areAllCharactersEquals(password)) {
-      return Strength.EASY;
+      return Strength.easy;
     }
     if ((_hasMinus(password) && _hasMayus(password) && _hasNumbers(password) && _hasSpecialCharacters(password)) ||
         (_hasMinus(password) && _hasMayus(password) && _hasNumbers(password)) ||
         (_hasMinus(password) && _hasMayus(password) && _hasSpecialCharacters(password)) ||
         (_hasMinus(password) && _hasNumbers(password) && _hasSpecialCharacters(password)) ||
         (_hasMayus(password) && _hasNumbers(password) && _hasSpecialCharacters(password))) {
-      return Strength.HARD;
+      return Strength.hard;
     } else if ((_hasMinus(password) && _hasMayus(password)) ||
         (_hasMinus(password) && _hasNumbers(password)) ||
         (_hasMayus(password) && _hasNumbers(password)) ||
         (_hasMinus(password) && _hasSpecialCharacters(password)) ||
         (_hasMayus(password) && _hasSpecialCharacters(password)) ||
         (_hasNumbers(password) && _hasSpecialCharacters(password))) {
-      return Strength.MEDIUM;
+      return Strength.medium;
     } else {
-      return Strength.EASY;
+      return Strength.easy;
     }
   } else if (password.length >= 12) {
     //  Si tiene 'minúsculas' o 'mayúsculas' o 'números' o 'especiales'-> MEDIUM
     //  else -> HARD
     if (_areAllCharactersEquals(password)) {
-      return Strength.EASY;
+      return Strength.easy;
     }
     if ((_hasMinus(password) && !_hasMayus(password) && !_hasNumbers(password) && !_hasSpecialCharacters(password)) ||
         (!_hasMinus(password) && _hasMayus(password) && !_hasNumbers(password) && !_hasSpecialCharacters(password)) ||
         (!_hasMinus(password) && !_hasMayus(password) && _hasNumbers(password) && !_hasSpecialCharacters(password)) ||
         (!_hasMinus(password) && !_hasMayus(password) && !_hasNumbers(password) && _hasSpecialCharacters(password))) {
-      return Strength.MEDIUM;
+      return Strength.medium;
     } else {
-      return Strength.HARD;
+      return Strength.hard;
     }
   } else {
-    return Strength.EMPTY;
+    return Strength.empty;
   }
 }
 
@@ -145,7 +140,7 @@ bool _areAllCharactersEquals(String password) {
   return true;
 }
 
-enum Strength { EMPTY, EASY, MEDIUM, HARD }
+enum Strength { empty, easy, medium, hard }
 
 /// InputField reset value and icon visibility
 
@@ -154,7 +149,7 @@ void resetTextIfNoFocus(TextEditingController controller, FocusNode focusNode) {
 }
 
 IconData? hideShowIcon(TextEditingController controller, FocusNode focusNode) {
-  return !isEmpty(controller.text) && focusNode.hasPrimaryFocus ? Icons.cancel_outlined : null;
+  return controller.text.isNotEmpty && focusNode.hasPrimaryFocus ? Icons.cancel_outlined : null;
 }
 
 List<bool> dataScreenValidator(String username, String name, String phone) {

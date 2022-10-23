@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nube/imports.dart';
 
 class VerificationInputField extends StatelessWidget {
   const VerificationInputField({
@@ -32,7 +31,7 @@ class VerificationInputField extends StatelessWidget {
       maxLength: 1,
       style: TextStyle(
         // color: AppColors.inputTextColorLight,
-        color: Theme.of(context).cursorColor,
+        color: Theme.of(context).indicatorColor,
         fontFamily: 'Tw Cen MT Regular',
         fontSize: 30.0,
         fontWeight: FontWeight.normal,
@@ -48,7 +47,7 @@ class VerificationInputField extends StatelessWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Theme.of(context).accentColor,
+            color: Theme.of(context).highlightColor,
             width: 1.0,
           ),
           borderRadius: BorderRadius.circular(10.0),
