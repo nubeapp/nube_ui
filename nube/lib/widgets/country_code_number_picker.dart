@@ -144,11 +144,6 @@ class _CountryCodeNumberPickerState extends State<CountryCodeNumberPicker> {
                                           ],
                                         ),
                                       ),
-                                      // const Divider(
-                                      //   height: 1.0,
-                                      //   color: AppColors.primaryTextLightColor,
-                                      //   thickness: 1.0,
-                                      // )
                                     ],
                                   );
                                 },
@@ -174,14 +169,7 @@ class _CountryCodeNumberPickerState extends State<CountryCodeNumberPicker> {
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Text(
-              'Place',
-            ),
-            Text(
-              ' Holder',
-            )
-          ],
+          children: const [],
         ),
       ),
     );
