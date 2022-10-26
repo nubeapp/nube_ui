@@ -857,7 +857,85 @@ class _VerificationRegisterScreenState extends State<VerificationRegisterScreen>
                   height: height(context) * 0.01,
                 ),
                 GestureDetector(
-                  onTap: () => log("Cancelar"),
+                  onTap: () {
+                    showGeneralDialog(
+                      context: context,
+                      pageBuilder: (context, animation1, animation2) {
+                        return Container();
+                      },
+                      transitionBuilder: (context, a1, a2, widget) {
+                        final curvedValue = Curves.easeInOutBack.transform(a1.value) - 1.0;
+                        return Transform(
+                          transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
+                          child: Opacity(
+                            opacity: a1.value,
+                            child: Scaffold(
+                              resizeToAvoidBottomInset: true,
+                              backgroundColor: Colors.transparent,
+                              body: Center(
+                                child: Container(
+                                  width: width(context) * 0.7,
+                                  height: height(context) * 0.25,
+                                  color: Theme.of(context).backgroundColor,
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: width(context) * 0.035),
+                                    child: Column(
+                                      children: [
+                                        const ClosePopupButton(),
+                                        SizedBox(
+                                          height: height(context) * 0.005,
+                                        ),
+                                        Text(
+                                          '¿Estás seguro que desea cancelar el proceso de registro?',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: Theme.of(context).primaryColor,
+                                            fontFamily: 'Tw Cen MT Regular',
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.w600,
+                                            letterSpacing: 1.0,
+                                            height: 1.5,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: height(context) * 0.07,
+                                        ),
+                                        GestureDetector(
+                                          onTap: () => Navigator.of(context).popUntil((route) {
+                                            return route.settings.name == 'main_screen';
+                                          }),
+                                          child: Container(
+                                            width: width(context) * 0.35,
+                                            height: height(context) * 0.04,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(10.0),
+                                              border: Border.all(color: Theme.of(context).errorColor, width: 1.0),
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                'Cancelar registro',
+                                                style: TextStyle(
+                                                  color: Theme.of(context).errorColor,
+                                                  fontFamily: 'Tw Cen MT Regular',
+                                                  fontSize: 13.0,
+                                                  fontWeight: FontWeight.w600,
+                                                  letterSpacing: 1.0,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
                   child: Text(
                     'Cancelar',
                     style: TextStyle(

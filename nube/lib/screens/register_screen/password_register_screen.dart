@@ -183,7 +183,7 @@ class _PasswordRegisterScreenState extends State<PasswordRegisterScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Pulsando sobre Finalizar se aceptan los ',
+                      'Al pulsar sobre Finalizar se aceptan los',
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontFamily: 'Tw Cen MT Regular',
@@ -196,7 +196,61 @@ class _PasswordRegisterScreenState extends State<PasswordRegisterScreen> {
                       height: height(context) * 0.005,
                     ),
                     GestureDetector(
-                      onTap: () => log("Términos"),
+                      onTap: () {
+                        showGeneralDialog(
+                          context: context,
+                          pageBuilder: (context, animation1, animation2) {
+                            return Container();
+                          },
+                          transitionBuilder: (context, a1, a2, widget) {
+                            final curvedValue = Curves.easeInOutBack.transform(a1.value) - 1.0;
+                            return Transform(
+                              transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
+                              child: Opacity(
+                                opacity: a1.value,
+                                child: Scaffold(
+                                  resizeToAvoidBottomInset: true,
+                                  backgroundColor: Colors.transparent,
+                                  body: Center(
+                                    child: Container(
+                                      width: width(context) * 0.85,
+                                      height: height(context) * 0.85,
+                                      color: Theme.of(context).backgroundColor,
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(horizontal: width(context) * 0.035),
+                                        child: Column(
+                                          children: [
+                                            const ClosePopupButton(),
+                                            Expanded(
+                                              child: SingleChildScrollView(
+                                                child: Padding(
+                                                  padding: EdgeInsets.only(bottom: height(context) * 0.025),
+                                                  child: Text(
+                                                    condiciones,
+                                                    textAlign: TextAlign.justify,
+                                                    style: TextStyle(
+                                                      color: Theme.of(context).primaryColor,
+                                                      fontFamily: 'Tw Cen MT Regular',
+                                                      fontSize: 12.0,
+                                                      fontWeight: FontWeight.w500,
+                                                      letterSpacing: 1.0,
+                                                      height: 2.0,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
                       child: Text(
                         'Términos y Condiciones del servicio',
                         style: TextStyle(
@@ -260,3 +314,6 @@ void _updateContainerColor(Strength strength) {
       break;
   }
 }
+
+String condiciones =
+    'Te damos la bienvenida a Instagram. Estas Condiciones de uso ("Condiciones") rigen el uso que haces de Instagram, excepto en los casos en que indiquemos expresamente que se aplican otras condiciones (y no estas), y proporcionan información sobre el servicio de Instagram ("Servicio"), detallado a continuación. Cuando creas una cuenta de Instagram o usas Instagram, aceptas estas condiciones. Las Condiciones del servicio de Meta no se aplican a este Servicio. \nHaz clic aquí para consultar un resumen del contrato y aquí para obtener otra información que el Código Europeo de las Comunicaciones Electrónicas nos exige brindar. \nSi tienes un negocio con sede en la UE y usas la función Comprar en Instagram para vender productos a consumidores ubicados en esta región, puedes revisar el Aviso sobre el reglamento P2B, que complementa nuestras Condiciones de uso, para obtener más información sobre tu relación comercial con nosotros. \nEl Servicio de Instagram es uno de los Productos de Meta que Meta Platforms Ireland Limited te proporciona. Por lo tanto, estas Condiciones de uso constituyen un acuerdo entre tú y Meta Platforms Ireland Limited. \nHaz clic aquí para consultar un resumen del contrato y aquí para obtener otra información que el Código Europeo de las Comunicaciones Electrónicas nos exige brindar. \nSi tienes un negocio con sede en la UE y usas la función "Comprar en Instagram" para vender productos a consumidores ubicados en esta región, puedes revisar el Aviso sobre el reglamento P2B, que complementa nuestras Condiciones de uso, para obtener más información sobre tu relación comercial con nosotros. \n El Servicio de Instagram es uno de los Productos de Meta que Meta Platforms Ireland Limited te proporciona. Por lo tanto, estas Condiciones de uso constituyen un acuerdo entre tú y Meta Platforms Ireland Limited. \nEl Servicio de Instagram\nAceptamos proporcionarte el Servicio de Instagram, que incluye todos los productos, las funciones, las apps, los servicios, las tecnologías y el software que ofrecemos para cumplir la misión de Instagram: acercarte a las personas y cosas que te encantan. El Servicio se compone de los siguientes aspectos:\nOfrecer oportunidades personalizadas para crear, conectar, comunicar, descubrir y compartir.\nCada persona es distinta. Queremos fortalecer las relaciones por medio de experiencias compartidas que realmente te interesen. Por lo tanto, creamos sistemas que intentan entender quiénes o qué cosas te interesan y les interesan a los demás, y usamos esa información para ayudarte a crear, encontrar, unir y compartir experiencias que te resulten relevantes. Parte de esto consiste en destacar el contenido, las funciones, las ofertas y las cuentas que te pueden interesar, y ofrecerte formas de experimentar Instagram en función de lo que tú y otras personas hacen tanto dentro como fuera de Instagram.';
