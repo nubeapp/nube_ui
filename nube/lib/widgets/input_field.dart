@@ -51,7 +51,6 @@ class InputField extends StatelessWidget {
           letterSpacing: 1.0,
         ),
         filled: true,
-        // fillColor: hasError ? AppColors.inputFieldErrorLightColor : AppColors.inputFieldBackgroundLight,
         fillColor: hasError ? AppColors.inputFieldError : Theme.of(context).cardColor,
         border: OutlineInputBorder(
           borderSide: BorderSide.none,

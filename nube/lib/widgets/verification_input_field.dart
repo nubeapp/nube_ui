@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../imports.dart';
+
 class VerificationInputField extends StatelessWidget {
   const VerificationInputField({
     required this.autofocus,
@@ -7,6 +9,7 @@ class VerificationInputField extends StatelessWidget {
     required this.onChanged,
     required this.onTap,
     required this.controller,
+    required this.hasError,
     Key? key,
   }) : super(key: key);
 
@@ -15,6 +18,7 @@ class VerificationInputField extends StatelessWidget {
   final Function(String) onChanged;
   final Function()? onTap;
   final TextEditingController controller;
+  final bool hasError;
 
   @override
   Widget build(BuildContext context) {
@@ -40,14 +44,14 @@ class VerificationInputField extends StatelessWidget {
       decoration: InputDecoration(
         counterText: "",
         filled: true,
-        fillColor: Theme.of(context).cardColor,
+        fillColor: hasError ? AppColors.inputFieldError : Theme.of(context).cardColor,
         border: OutlineInputBorder(
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.circular(10.0),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Theme.of(context).highlightColor,
+            color: hasError ? Theme.of(context).errorColor : Theme.of(context).highlightColor,
             width: 1.0,
           ),
           borderRadius: BorderRadius.circular(10.0),

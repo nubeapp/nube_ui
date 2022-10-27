@@ -1,3 +1,5 @@
+import 'package:flutter/gestures.dart';
+
 import '../../imports.dart';
 import 'package:flutter/material.dart';
 
@@ -175,93 +177,109 @@ class _PasswordRegisterScreenState extends State<PasswordRegisterScreen> {
               ),
               SizedBox(
                 width: width(context),
-                height: height(context) * 0.02,
+                height: height(context) * 0.01,
               ),
-              Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
+              RichText(
+                text: TextSpan(
+                  text: 'Al pulsar sobre ',
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontFamily: 'Tw Cen MT Regular',
+                    fontSize: 12.0,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 1.0,
+                    height: 1.5,
+                  ),
                   children: [
-                    Text(
-                      'Al pulsar sobre Finalizar se aceptan los',
+                    TextSpan(
+                      text: 'Finalizar ',
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontFamily: 'Tw Cen MT Regular',
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.w500,
+                        fontStyle: FontStyle.italic,
+                        letterSpacing: 1.0,
+                        height: 1.5,
+                      ),
+                    ),
+                    TextSpan(
+                      text: 'se aceptan los ',
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontFamily: 'Tw Cen MT Regular',
                         fontSize: 12.0,
                         fontWeight: FontWeight.w500,
                         letterSpacing: 1.0,
+                        height: 1.5,
                       ),
                     ),
-                    SizedBox(
-                      height: height(context) * 0.005,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        showGeneralDialog(
-                          context: context,
-                          pageBuilder: (context, animation1, animation2) {
-                            return Container();
-                          },
-                          transitionBuilder: (context, a1, a2, widget) {
-                            final curvedValue = Curves.easeInOutBack.transform(a1.value) - 1.0;
-                            return Transform(
-                              transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
-                              child: Opacity(
-                                opacity: a1.value,
-                                child: Scaffold(
-                                  resizeToAvoidBottomInset: true,
-                                  backgroundColor: Colors.transparent,
-                                  body: Center(
-                                    child: Container(
-                                      width: width(context) * 0.85,
-                                      height: height(context) * 0.85,
-                                      color: Theme.of(context).backgroundColor,
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: width(context) * 0.035),
-                                        child: Column(
-                                          children: [
-                                            const ClosePopupButton(),
-                                            Expanded(
-                                              child: SingleChildScrollView(
-                                                child: Padding(
-                                                  padding: EdgeInsets.only(bottom: height(context) * 0.025),
-                                                  child: Text(
-                                                    condiciones,
-                                                    textAlign: TextAlign.justify,
-                                                    style: TextStyle(
-                                                      color: Theme.of(context).primaryColor,
-                                                      fontFamily: 'Tw Cen MT Regular',
-                                                      fontSize: 12.0,
-                                                      fontWeight: FontWeight.w500,
-                                                      letterSpacing: 1.0,
-                                                      height: 2.0,
+                    TextSpan(
+                      text: 'Términos y condiciones del servicio',
+                      style: TextStyle(
+                        color: Theme.of(context).highlightColor,
+                        fontFamily: 'Tw Cen MT Regular',
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.w600,
+                        letterSpacing: 1.0,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          showGeneralDialog(
+                            context: context,
+                            pageBuilder: (context, animation1, animation2) {
+                              return Container();
+                            },
+                            transitionBuilder: (context, a1, a2, widget) {
+                              final curvedValue = Curves.easeInOutBack.transform(a1.value) - 1.0;
+                              return Transform(
+                                transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
+                                child: Opacity(
+                                  opacity: a1.value,
+                                  child: Scaffold(
+                                    resizeToAvoidBottomInset: true,
+                                    backgroundColor: Colors.transparent,
+                                    body: Center(
+                                      child: Container(
+                                        width: width(context) * 0.85,
+                                        height: height(context) * 0.85,
+                                        color: Theme.of(context).backgroundColor,
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(horizontal: width(context) * 0.035),
+                                          child: Column(
+                                            children: [
+                                              const ClosePopupButton(),
+                                              Expanded(
+                                                child: SingleChildScrollView(
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(bottom: height(context) * 0.025),
+                                                    child: Text(
+                                                      condiciones,
+                                                      textAlign: TextAlign.justify,
+                                                      style: TextStyle(
+                                                        color: Theme.of(context).primaryColor,
+                                                        fontFamily: 'Tw Cen MT Regular',
+                                                        fontSize: 12.0,
+                                                        fontWeight: FontWeight.w500,
+                                                        letterSpacing: 1.0,
+                                                        height: 2.0,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                            )
-                                          ],
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                      child: Text(
-                        'Términos y Condiciones del servicio',
-                        style: TextStyle(
-                          color: Theme.of(context).highlightColor,
-                          fontFamily: 'Tw Cen MT Regular',
-                          fontSize: 12.0,
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: 1.0,
-                        ),
-                      ),
-                    )
+                              );
+                            },
+                          );
+                        },
+                    ),
                   ],
                 ),
               ),

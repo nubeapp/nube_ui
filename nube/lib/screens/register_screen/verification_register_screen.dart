@@ -23,6 +23,7 @@ class _VerificationRegisterScreenState extends State<VerificationRegisterScreen>
   final TextEditingController _fifthNumberController = TextEditingController();
 
   int currentFocus = 1;
+  bool hasError = false;
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +66,7 @@ class _VerificationRegisterScreenState extends State<VerificationRegisterScreen>
                       width: width(context) * 0.13,
                       height: width(context) * 0.13,
                       child: VerificationInputField(
+                        hasError: hasError,
                         autofocus: true,
                         controller: _firstNumberController,
                         focusNode: _firstNumberFocus,
@@ -107,6 +109,7 @@ class _VerificationRegisterScreenState extends State<VerificationRegisterScreen>
                       width: width(context) * 0.13,
                       height: width(context) * 0.13,
                       child: VerificationInputField(
+                        hasError: hasError,
                         autofocus: false,
                         controller: _secondNumberController,
                         focusNode: _secondNumberFocus,
@@ -150,6 +153,7 @@ class _VerificationRegisterScreenState extends State<VerificationRegisterScreen>
                       width: width(context) * 0.13,
                       height: width(context) * 0.13,
                       child: VerificationInputField(
+                        hasError: hasError,
                         autofocus: false,
                         controller: _thirdNumberController,
                         focusNode: _thirdNumberFocus,
@@ -193,6 +197,7 @@ class _VerificationRegisterScreenState extends State<VerificationRegisterScreen>
                       width: width(context) * 0.13,
                       height: width(context) * 0.13,
                       child: VerificationInputField(
+                        hasError: hasError,
                         autofocus: false,
                         controller: _fourthNumberController,
                         focusNode: _fourthNumberFocus,
@@ -236,6 +241,7 @@ class _VerificationRegisterScreenState extends State<VerificationRegisterScreen>
                       width: width(context) * 0.13,
                       height: width(context) * 0.13,
                       child: VerificationInputField(
+                        hasError: hasError,
                         autofocus: false,
                         controller: _fifthNumberController,
                         focusNode: _fifthNumberFocus,
@@ -741,7 +747,19 @@ class _VerificationRegisterScreenState extends State<VerificationRegisterScreen>
                         iconSize: 36.0,
                         splashRadius: 0.01,
                         color: Theme.of(context).highlightColor,
-                        onPressed: () => log('Hecho'),
+                        onPressed: () {
+                          setState(() {
+                            if (!equalsString(_firstNumberController.text, '0') ||
+                                !equalsString(_secondNumberController.text, '0') ||
+                                !equalsString(_thirdNumberController.text, '0') ||
+                                !equalsString(_fourthNumberController.text, '0') ||
+                                !equalsString(_fifthNumberController.text, '0')) {
+                              hasError = true;
+                            } else {
+                              hasError = false;
+                            }
+                          });
+                        },
                       ),
                     ),
                     NumberButton(
