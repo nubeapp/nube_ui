@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
           'password_screen': (context) => const PasswordRegisterScreen(),
           'verification_screen': (context) => const VerificationRegisterScreen(),
         },
-        initialRoute: 'main_screen',
+        initialRoute: 'data_screen',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.light(),
         darkTheme: AppTheme.dark(),

@@ -8,7 +8,7 @@ abstract class AppColors {
   static const inputFieldBackgroundDark = Color(0xFF212121);
 
   static const textLight = Color(0xFF797979);
-  static const textDark = Color(0xFFFFFFFF);
+  static const textDark = Color.fromARGB(255, 221, 221, 221);
 
   static const iconLight = Color(0xFF797979);
   static const iconDark = Color(0xFF797979);
@@ -43,6 +43,7 @@ abstract class AppTheme {
         indicatorColor: AppColors.inputTextLight,
         primaryColor: AppColors.textLight,
         highlightColor: _LightColors.accent,
+        shadowColor: _LightColors.background,
       );
 
   static ThemeData dark() => ThemeData(
@@ -61,6 +62,7 @@ abstract class AppTheme {
         errorColor: AppColors.error,
         indicatorColor: AppColors.inputTextDark,
         primaryColor: AppColors.textDark,
+        shadowColor: Color.fromARGB(255, 44, 44, 44),
       );
 }
 

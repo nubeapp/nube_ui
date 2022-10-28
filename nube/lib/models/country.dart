@@ -12,8 +12,8 @@ class Country {
   factory Country.fromJson(Map<String, dynamic> json) {
     return Country(
       name: json['name'] as String,
-      isoCode: json['isoCode'] as String,
-      dialCode: json['dialCode'] as String,
+      isoCode: json['code'] as String,
+      dialCode: json['dial_code'] as String,
       flag: json['flag'] as String,
     );
   }

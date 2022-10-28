@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../imports.dart';
 
 class CountryCodeNumberPicker extends StatefulWidget {
@@ -40,36 +41,26 @@ class _CountryCodeNumberPickerState extends State<CountryCodeNumberPicker> {
                   backgroundColor: Colors.transparent,
                   body: Center(
                     child: Container(
-                      width: width(context) * 0.8,
-                      height: height(context) * 0.7,
-                      color: Theme.of(context).backgroundColor,
+                      width: width(context) * 0.85,
+                      height: height(context) * 0.75,
+                      color: Theme.of(context).shadowColor,
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: width(context) * 0.035),
                         child: Column(
                           children: [
                             const ClosePopupButton(),
-                            InputField(
-                              hintText: 'Introduzca el pais...',
-                              keyboardType: TextInputType.text,
-                              obscureText: false,
-                              textInputAction: TextInputAction.done,
-                              controller: TextEditingController(),
-                              onChanged: (value) {},
-                              hasError: false,
-                            ),
                             Text(
                               'Escoge el prefijo de tu país',
                               style: TextStyle(
                                 color: Theme.of(context).primaryColor,
                                 fontFamily: 'Tw Cen MT Regular',
-                                fontSize: 12.0,
+                                fontSize: 14.0,
                                 fontWeight: FontWeight.normal,
                                 letterSpacing: 1.0,
-                                height: 2.0,
                               ),
                             ),
                             SizedBox(
-                              height: height(context) * 0.01,
+                              height: height(context) * 0.03,
                             ),
                             Expanded(
                               child: ListView.builder(
@@ -80,26 +71,29 @@ class _CountryCodeNumberPickerState extends State<CountryCodeNumberPicker> {
                                       Container(
                                         width: width(context),
                                         height: height(context) * 0.05,
-                                        // color: Colors.orange,
                                         margin: EdgeInsets.only(bottom: height(context) * 0.005, top: height(context) * 0.005),
                                         child: Row(
                                           children: [
-                                            // Container(
-                                            //   width: width(context) * 0.1,
-                                            //   alignment: Alignment.center,
-                                            //   child: SvgPicture.network(
-                                            //     countries[index].flag,
-                                            //     height: 20.0,
-                                            //     width: 30.0,
-                                            //   ),
-                                            // ),
                                             SizedBox(
                                               width: width(context) * 0.02,
+                                            ),
+                                            Container(
+                                              width: width(context) * 0.1,
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                countries[index].flag,
+                                                style: const TextStyle(
+                                                  fontSize: 28.0,
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: width(context) * 0.06,
                                             ),
                                             SizedBox(
                                               width: width(context) * 0.18,
                                               child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                mainAxisAlignment: MainAxisAlignment.start,
                                                 children: [
                                                   Text(
                                                     '+',
@@ -116,7 +110,7 @@ class _CountryCodeNumberPickerState extends State<CountryCodeNumberPicker> {
                                                     style: TextStyle(
                                                       color: Theme.of(context).primaryColor,
                                                       fontFamily: 'Tw Cen MT Condensed',
-                                                      fontSize: 18.0,
+                                                      fontSize: 20.0,
                                                       fontWeight: FontWeight.w600,
                                                       letterSpacing: 1,
                                                     ),
@@ -124,19 +118,16 @@ class _CountryCodeNumberPickerState extends State<CountryCodeNumberPicker> {
                                                 ],
                                               ),
                                             ),
-                                            SizedBox(
-                                              width: width(context) * 0.02,
-                                            ),
                                             Container(
                                                 width: width(context) * 0.4,
-                                                alignment: Alignment.center,
+                                                alignment: Alignment.centerLeft,
                                                 child: Text(
                                                   countries[index].name,
                                                   overflow: TextOverflow.ellipsis,
                                                   style: TextStyle(
                                                     color: Theme.of(context).primaryColor,
                                                     fontFamily: 'Tw Cen MT Condensed',
-                                                    fontSize: 18.0,
+                                                    fontSize: 20.0,
                                                     fontWeight: FontWeight.w600,
                                                     letterSpacing: 1,
                                                   ),
@@ -144,6 +135,7 @@ class _CountryCodeNumberPickerState extends State<CountryCodeNumberPicker> {
                                           ],
                                         ),
                                       ),
+                                      const Divider()
                                     ],
                                   );
                                 },
