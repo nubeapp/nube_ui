@@ -38,6 +38,7 @@ class InputField extends StatelessWidget {
       textAlignVertical: TextAlignVertical.center,
       enableSuggestions: false,
       autocorrect: false,
+      enableInteractiveSelection: false,
       obscureText: obscureText,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.only(top: 20.0, bottom: 20.0, left: 15.0),
@@ -50,7 +51,6 @@ class InputField extends StatelessWidget {
           letterSpacing: 1.0,
         ),
         filled: true,
-        // fillColor: hasError ? AppColors.inputFieldErrorLightColor : AppColors.inputFieldBackgroundLight,
         fillColor: hasError ? AppColors.inputFieldError : Theme.of(context).cardColor,
         border: OutlineInputBorder(
           borderSide: BorderSide.none,

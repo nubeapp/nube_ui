@@ -14,6 +14,7 @@ class ClosePopupButton extends StatelessWidget {
         children: [
           IconButton(
             padding: EdgeInsets.zero,
+            splashRadius: 0.01,
             constraints: const BoxConstraints(),
             icon: const Icon(Icons.close),
             color: Theme.of(context).primaryColor,
