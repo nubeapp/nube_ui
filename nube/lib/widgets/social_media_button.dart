@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../imports.dart';
 
-@immutable
 class SocialMediaButton extends StatelessWidget {
   const SocialMediaButton({Key? key, required this.asset, required this.socialMediaText, required this.onTap}) : super(key: key);
 

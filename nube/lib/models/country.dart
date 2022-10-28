@@ -1,6 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
-@immutable
 class Country {
   final String name;
   final String isoCode;

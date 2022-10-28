@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../imports.dart';
 
-@immutable
 class Button extends StatelessWidget {
   const Button({Key? key, required this.text, required this.onPressed}) : super(key: key);
 
