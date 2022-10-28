@@ -10,7 +10,7 @@ class CountryCodeNumberPicker extends StatefulWidget {
 }
 
 class _CountryCodeNumberPickerState extends State<CountryCodeNumberPicker> {
-  List<Country> countries = List.empty(growable: true);
+  int initialIndex = 207;
 
   @override
   void initState() {
@@ -20,10 +20,7 @@ class _CountryCodeNumberPickerState extends State<CountryCodeNumberPicker> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () async {
-        if (countries.isEmpty) {
-          countries = await loadJson();
-        }
+      onTap: () {
         showGeneralDialog(
           context: context,
           pageBuilder: (context, animation1, animation2) {
@@ -67,45 +64,69 @@ class _CountryCodeNumberPickerState extends State<CountryCodeNumberPicker> {
                                 itemBuilder: (BuildContext context, int index) {
                                   return Column(
                                     children: [
-                                      Container(
-                                        width: width(context),
-                                        height: height(context) * 0.05,
-                                        margin: EdgeInsets.only(bottom: height(context) * 0.005, top: height(context) * 0.005),
-                                        child: Row(
-                                          children: [
-                                            SizedBox(
-                                              width: width(context) * 0.02,
-                                            ),
-                                            Container(
-                                              width: width(context) * 0.1,
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                countries[index].flag,
-                                                style: const TextStyle(
-                                                  fontSize: 28.0,
+                                      GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            initialIndex = index;
+                                          });
+                                        },
+                                        child: Container(
+                                          width: width(context),
+                                          height: height(context) * 0.05,
+                                          color: initialIndex == index ? Colors.grey : Colors.white,
+                                          margin: EdgeInsets.only(bottom: height(context) * 0.005, top: height(context) * 0.005),
+                                          child: Row(
+                                            children: [
+                                              SizedBox(
+                                                width: width(context) * 0.02,
+                                              ),
+                                              Container(
+                                                width: width(context) * 0.1,
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  countries[index].flag,
+                                                  style: const TextStyle(
+                                                    fontSize: 26.0,
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                            SizedBox(
-                                              width: width(context) * 0.06,
-                                            ),
-                                            SizedBox(
-                                              width: width(context) * 0.18,
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    '+',
-                                                    style: TextStyle(
-                                                      color: Theme.of(context).primaryColor,
-                                                      fontFamily: 'Tw Cen MT Condensed',
-                                                      fontSize: 14.0,
-                                                      fontWeight: FontWeight.w600,
-                                                      letterSpacing: 1,
+                                              SizedBox(
+                                                width: width(context) * 0.06,
+                                              ),
+                                              SizedBox(
+                                                width: width(context) * 0.18,
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      '+',
+                                                      style: TextStyle(
+                                                        color: Theme.of(context).primaryColor,
+                                                        fontFamily: 'Tw Cen MT Condensed',
+                                                        fontSize: 14.0,
+                                                        fontWeight: FontWeight.w600,
+                                                        letterSpacing: 1,
+                                                      ),
                                                     ),
-                                                  ),
-                                                  Text(
-                                                    countries[index].dialCode.substring(1),
+                                                    Text(
+                                                      countries[index].dialCode.substring(1),
+                                                      style: TextStyle(
+                                                        color: Theme.of(context).primaryColor,
+                                                        fontFamily: 'Tw Cen MT Condensed',
+                                                        fontSize: 20.0,
+                                                        fontWeight: FontWeight.w600,
+                                                        letterSpacing: 1,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Container(
+                                                  width: width(context) * 0.4,
+                                                  alignment: Alignment.centerLeft,
+                                                  child: Text(
+                                                    countries[index].name,
+                                                    overflow: TextOverflow.ellipsis,
                                                     style: TextStyle(
                                                       color: Theme.of(context).primaryColor,
                                                       fontFamily: 'Tw Cen MT Condensed',
@@ -113,25 +134,9 @@ class _CountryCodeNumberPickerState extends State<CountryCodeNumberPicker> {
                                                       fontWeight: FontWeight.w600,
                                                       letterSpacing: 1,
                                                     ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            Container(
-                                                width: width(context) * 0.4,
-                                                alignment: Alignment.centerLeft,
-                                                child: Text(
-                                                  countries[index].name,
-                                                  overflow: TextOverflow.ellipsis,
-                                                  style: TextStyle(
-                                                    color: Theme.of(context).primaryColor,
-                                                    fontFamily: 'Tw Cen MT Condensed',
-                                                    fontSize: 20.0,
-                                                    fontWeight: FontWeight.w600,
-                                                    letterSpacing: 1,
-                                                  ),
-                                                )),
-                                          ],
+                                                  )),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                       const Divider()
@@ -160,7 +165,40 @@ class _CountryCodeNumberPickerState extends State<CountryCodeNumberPicker> {
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [],
+          children: [
+            Text(
+              countries[initialIndex].flag,
+              style: const TextStyle(fontSize: 22.0),
+            ),
+            SizedBox(
+              width: width(context) * 0.02,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  '+',
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontFamily: 'Tw Cen MT Condensed',
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 1,
+                  ),
+                ),
+                Text(
+                  countries[initialIndex].dialCode.substring(1),
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontFamily: 'Tw Cen MT Condensed',
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 1,
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

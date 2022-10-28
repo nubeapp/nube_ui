@@ -41,7 +41,7 @@ class _MainRegisterScreenState extends State<MainRegisterScreen> {
             children: [
               SizedBox(
                 width: width(context),
-                height: height(context) * 0.15,
+                height: height(context) * 0.14,
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
