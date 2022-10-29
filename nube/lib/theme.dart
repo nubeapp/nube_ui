@@ -62,7 +62,7 @@ abstract class AppTheme {
         errorColor: AppColors.error,
         indicatorColor: AppColors.inputTextDark,
         primaryColor: AppColors.textDark,
-        shadowColor: Color.fromARGB(255, 44, 44, 44),
+        shadowColor: const Color.fromARGB(255, 44, 44, 44),
       );
 }
 
