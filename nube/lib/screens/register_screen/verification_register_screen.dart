@@ -755,6 +755,7 @@ class _VerificationRegisterScreenState extends State<VerificationRegisterScreen>
                                 !equalsString(_fourthNumberController.text, '0') ||
                                 !equalsString(_fifthNumberController.text, '0')) {
                               hasError = true;
+                              FocusScope.of(context).requestFocus(_fifthNumberFocus);
                             } else {
                               hasError = false;
                             }

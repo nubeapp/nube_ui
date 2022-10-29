@@ -1,3 +1,5 @@
+import 'package:nube/widgets/container_country_code_number.dart';
+
 import '../../imports.dart';
 import 'package:flutter/material.dart';
 
@@ -200,7 +202,7 @@ class _DataRegisterScreenState extends State<DataRegisterScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const CountryCodeNumberPicker(),
+                    const ContainerCountryCodeNumber(),
                     SizedBox(
                       width: width(context) * 0.57,
                       height: height(context) * 0.065,

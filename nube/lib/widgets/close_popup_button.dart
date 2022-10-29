@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:nube/imports.dart';
 
 class ClosePopupButton extends StatelessWidget {
-  const ClosePopupButton({Key? key}) : super(key: key);
+  const ClosePopupButton({Key? key, this.value}) : super(key: key);
+
+  final int? value;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class ClosePopupButton extends StatelessWidget {
             constraints: const BoxConstraints(),
             icon: const Icon(Icons.close),
             color: Theme.of(context).primaryColor,
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => Navigator.of(context).pop(value),
           ),
         ],
       ),

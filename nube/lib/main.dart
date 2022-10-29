@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import '../imports.dart';
 
@@ -31,8 +33,15 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: AppTheme.light(),
         darkTheme: AppTheme.dark(),
-        themeMode: ThemeMode.light,
+        themeMode: ThemeMode.dark,
       ),
     );
   }
+}
+
+Future<List<Country>> loadJson() async {
+  String data = await rootBundle.loadString('assets/json/countries.json');
+  var countriesObjsJson = jsonDecode(data)['countries'] as List;
+  List<Country> countryObj = countriesObjsJson.map((countryJson) => Country.fromJson(countryJson)).toList();
+  return countryObj;
 }
