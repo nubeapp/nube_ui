@@ -4,7 +4,7 @@ import 'package:nube/imports.dart';
 class ClosePopupButton extends StatelessWidget {
   const ClosePopupButton({Key? key, this.value}) : super(key: key);
 
-  final int? value;
+  final String? value;
 
   @override
   Widget build(BuildContext context) {

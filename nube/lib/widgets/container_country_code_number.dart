@@ -10,6 +10,7 @@ class ContainerCountryCodeNumber extends StatefulWidget {
 
 class _ContainerCountryCodeNumberState extends State<ContainerCountryCodeNumber> {
   static int initialIndex = 207;
+  static String countryName = 'Spain';
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +36,12 @@ class _ContainerCountryCodeNumberState extends State<ContainerCountryCodeNumber>
             },
           ).then((value) {
             setState(() {
-              initialIndex = value as int;
+              countryName = value as String;
+              for (int i = 0; i < countries.length; i++) {
+                if (countryName == countries[i].name) {
+                  initialIndex = i;
+                }
+              }
             });
           });
         });
