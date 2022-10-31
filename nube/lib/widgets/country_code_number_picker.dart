@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import '../imports.dart';
 
 class CountryCodeNumberPicker extends StatefulWidget {
-  const CountryCodeNumberPicker({Key? key, required this.initialIndex}) : super(key: key);
+  const CountryCodeNumberPicker({Key? key, required this.initialIndex, required this.countryName}) : super(key: key);
 
   final int initialIndex;
+  final String countryName;
 
   @override
-  State<CountryCodeNumberPicker> createState() => _CountryCodeNumberPickerState(initialIndex);
+  State<CountryCodeNumberPicker> createState() => _CountryCodeNumberPickerState(initialIndex, countryName);
 }
 
 class _CountryCodeNumberPickerState extends State<CountryCodeNumberPicker> {
@@ -20,19 +21,18 @@ class _CountryCodeNumberPickerState extends State<CountryCodeNumberPicker> {
   final FocusNode _searchFocus = FocusNode();
   List<Country> results = List.empty(growable: true);
 
-  _CountryCodeNumberPickerState(this.initialIndex);
+  _CountryCodeNumberPickerState(this.initialIndex, this.countryName);
 
   @override
   void initState() {
     super.initState();
     results.addAll(countries);
-    countryName = results[initialIndex].name;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.transparent,
       body: Center(
         child: Container(
@@ -52,14 +52,7 @@ class _CountryCodeNumberPickerState extends State<CountryCodeNumberPicker> {
                   textInputAction: TextInputAction.done,
                   controller: _searchController,
                   onChanged: (value) {
-                    setState(() {
-                      results = List.empty(growable: true);
-                      for (Country country in countries) {
-                        if (country.name.toLowerCase().contains(value.toLowerCase())) {
-                          results.add(country);
-                        }
-                      }
-                    });
+                    getCountriesResults(value);
                   },
                   hasError: false,
                   suffixIcon: hideShowIcon(_searchController, _searchFocus),
@@ -140,23 +133,11 @@ class _CountryCodeNumberPickerState extends State<CountryCodeNumberPicker> {
                                             children: [
                                               Text(
                                                 '+',
-                                                style: TextStyle(
-                                                  color: Theme.of(context).primaryColor,
-                                                  fontFamily: 'Tw Cen MT Condensed',
-                                                  fontSize: 14.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  letterSpacing: 1,
-                                                ),
+                                                style: textStyleCodeNumber(context, 14.0),
                                               ),
                                               Text(
                                                 results[index].dialCode.substring(1),
-                                                style: TextStyle(
-                                                  color: Theme.of(context).primaryColor,
-                                                  fontFamily: 'Tw Cen MT Condensed',
-                                                  fontSize: 20.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  letterSpacing: 1,
-                                                ),
+                                                style: textStyleCodeNumber(context, 20.0),
                                               ),
                                             ],
                                           ),
@@ -191,5 +172,26 @@ class _CountryCodeNumberPickerState extends State<CountryCodeNumberPicker> {
         ),
       ),
     );
+  }
+
+  TextStyle textStyleCodeNumber(BuildContext context, double fontSize) {
+    return TextStyle(
+      color: Theme.of(context).primaryColor,
+      fontFamily: 'Tw Cen MT Condensed',
+      fontSize: fontSize,
+      fontWeight: FontWeight.w600,
+      letterSpacing: 1,
+    );
+  }
+
+  void getCountriesResults(String value) {
+    return setState(() {
+      results = List.empty(growable: true);
+      for (Country country in countries) {
+        if (country.name.toLowerCase().contains(value.toLowerCase())) {
+          results.add(country);
+        }
+      }
+    });
   }
 }

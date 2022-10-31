@@ -25,7 +25,10 @@ class _ContainerCountryCodeNumberState extends State<ContainerCountryCodeNumber>
                 transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
                 child: Opacity(
                   opacity: a1.value,
-                  child: CountryCodeNumberPicker(initialIndex: initialIndex),
+                  child: CountryCodeNumberPicker(
+                    initialIndex: initialIndex,
+                    countryName: countryName,
+                  ),
                 ),
               );
             },
