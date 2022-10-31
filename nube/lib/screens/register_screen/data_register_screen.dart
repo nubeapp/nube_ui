@@ -61,14 +61,15 @@ class _DataRegisterScreenState extends State<DataRegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.only(left: width(context) * 0.075, right: width(context) * 0.075),
+        padding: EdgeInsets.only(
+            left: width(context) * 0.075, right: width(context) * 0.075),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 width: width(context),
-                height: height(context) * 0.05,
+                height: height(context) * 0.07,
               ),
               CustomIconButton(
                 icon: Icons.arrow_back_ios_new_rounded,
@@ -115,7 +116,8 @@ class _DataRegisterScreenState extends State<DataRegisterScreen> {
               ),
               Opacity(
                 opacity: _isUsernameErrorVisible ? 1 : 0,
-                child: const ErrorMessage(message: "El nombre de usuario es obligatorio"),
+                child: const ErrorMessage(
+                    message: "El nombre de usuario es obligatorio"),
               ),
               SizedBox(
                 width: width(context),
@@ -169,7 +171,8 @@ class _DataRegisterScreenState extends State<DataRegisterScreen> {
                       onPressed: () {
                         resetTextIfNoFocus(_fSurnameController, _fSurnameFocus);
                       },
-                      suffixIcon: hideShowIcon(_fSurnameController, _fSurnameFocus),
+                      suffixIcon:
+                          hideShowIcon(_fSurnameController, _fSurnameFocus),
                     ),
                   ),
                   SizedBox(
@@ -189,7 +192,8 @@ class _DataRegisterScreenState extends State<DataRegisterScreen> {
                       onPressed: () {
                         resetTextIfNoFocus(_sSurnameController, _sSurnameFocus);
                       },
-                      suffixIcon: hideShowIcon(_sSurnameController, _sSurnameFocus),
+                      suffixIcon:
+                          hideShowIcon(_sSurnameController, _sSurnameFocus),
                     ),
                   ),
                 ],
@@ -200,6 +204,7 @@ class _DataRegisterScreenState extends State<DataRegisterScreen> {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const ContainerCountryCodeNumber(),
                   SizedBox(
@@ -236,7 +241,8 @@ class _DataRegisterScreenState extends State<DataRegisterScreen> {
                   ),
                   Opacity(
                     opacity: _isPhoneErrorVisible ? 1 : 0,
-                    child: const ErrorMessage(message: "El teléfono móvil es obligatorio"),
+                    child: const ErrorMessage(
+                        message: "El teléfono móvil es obligatorio"),
                   ),
                 ],
               ),
@@ -248,11 +254,16 @@ class _DataRegisterScreenState extends State<DataRegisterScreen> {
                 text: 'Continuar',
                 onPressed: () {
                   setState(() {
-                    usernameNamePhoneValidator = dataScreenValidator(_usernameController.text, _nameController.text, _phoneController.text);
+                    usernameNamePhoneValidator = dataScreenValidator(
+                        _usernameController.text,
+                        _nameController.text,
+                        _phoneController.text);
                     _isUsernameErrorVisible = usernameNamePhoneValidator[0];
                     _isNameErrorVisible = usernameNamePhoneValidator[1];
                     _isPhoneErrorVisible = usernameNamePhoneValidator[2];
-                    if (!_isUsernameErrorVisible && !_isNameErrorVisible && !_isPhoneErrorVisible) {
+                    if (!_isUsernameErrorVisible &&
+                        !_isNameErrorVisible &&
+                        !_isPhoneErrorVisible) {
                       Navigator.of(context).push(
                         createRoute(
                           const PasswordRegisterScreen(),
@@ -264,7 +275,7 @@ class _DataRegisterScreenState extends State<DataRegisterScreen> {
               ),
               SizedBox(
                 width: width(context),
-                height: height(context) * 0.07,
+                height: height(context) * 0.06,
               ),
               const Center(
                 child: Image(

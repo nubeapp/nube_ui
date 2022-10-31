@@ -41,7 +41,8 @@ class InputField extends StatelessWidget {
       enableInteractiveSelection: false,
       obscureText: obscureText,
       decoration: InputDecoration(
-        contentPadding: const EdgeInsets.only(top: 20.0, bottom: 20.0, left: 15.0),
+        contentPadding:
+            const EdgeInsets.only(top: 20.0, bottom: 20.0, left: 15.0),
         hintText: hintText,
         hintStyle: const TextStyle(
           // color: AppColors.primaryTextLightColor,
@@ -51,14 +52,17 @@ class InputField extends StatelessWidget {
           letterSpacing: 1.0,
         ),
         filled: true,
-        fillColor: hasError ? AppColors.inputFieldError : Theme.of(context).cardColor,
+        fillColor:
+            hasError ? AppColors.inputFieldError : Theme.of(context).cardColor,
         border: OutlineInputBorder(
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.circular(10.0),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: hasError ? Theme.of(context).errorColor : Theme.of(context).highlightColor,
+            color: hasError
+                ? Theme.of(context).errorColor
+                : Theme.of(context).highlightColor,
             width: 1.0,
           ),
           borderRadius: BorderRadius.circular(10.0),
@@ -69,7 +73,7 @@ class InputField extends StatelessWidget {
             suffixIcon,
             size: 24.0,
           ),
-          color: Theme.of(context).indicatorColor,
+          color: Theme.of(context).iconTheme.color,
           onPressed: onPressed,
           splashRadius: 0.01,
         ),
