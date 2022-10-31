@@ -69,7 +69,7 @@ class _DataRegisterScreenState extends State<DataRegisterScreen> {
             children: [
               SizedBox(
                 width: width(context),
-                height: height(context) * 0.05,
+                height: height(context) * 0.07,
               ),
               CustomIconButton(
                 icon: Icons.arrow_back_ios_new_rounded,
@@ -275,7 +275,7 @@ class _DataRegisterScreenState extends State<DataRegisterScreen> {
               ),
               SizedBox(
                 width: width(context),
-                height: height(context) * 0.07,
+                height: height(context) * 0.06,
               ),
               const Center(
                 child: Image(

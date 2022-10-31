@@ -34,13 +34,14 @@ class _PasswordRegisterScreenState extends State<PasswordRegisterScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Padding(
-        padding: EdgeInsets.only(left: width(context) * 0.075, right: width(context) * 0.075),
+        padding: EdgeInsets.only(
+            left: width(context) * 0.075, right: width(context) * 0.075),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
               width: width(context),
-              height: height(context) * 0.05,
+              height: height(context) * 0.07,
             ),
             CustomIconButton(
               icon: Icons.arrow_back_ios_new_rounded,
@@ -84,8 +85,11 @@ class _PasswordRegisterScreenState extends State<PasswordRegisterScreen> {
                   }
                 });
               },
-              suffixIcon:
-                  _passwordController.text.isNotEmpty ? (passwordVisibility["PASSWORD"]! ? Icons.visibility_off_outlined : Icons.visibility_outlined) : null,
+              suffixIcon: _passwordController.text.isNotEmpty
+                  ? (passwordVisibility["PASSWORD"]!
+                      ? Icons.visibility_off_outlined
+                      : Icons.visibility_outlined)
+                  : null,
             ),
             SizedBox(
               width: width(context),
@@ -94,7 +98,8 @@ class _PasswordRegisterScreenState extends State<PasswordRegisterScreen> {
             _passwordController.text.isEmpty
                 ? Opacity(
                     opacity: _isPasswordErrorVisible ? 1 : 0,
-                    child: const ErrorMessage(message: 'La contraseña no puede estar vacía'),
+                    child: const ErrorMessage(
+                        message: 'La contraseña no puede estar vacía'),
                   )
                 : Row(
                     children: [
@@ -104,7 +109,9 @@ class _PasswordRegisterScreenState extends State<PasswordRegisterScreen> {
                       Container(
                         width: width(context) * 0.12,
                         height: height(context) * 0.01,
-                        color: strengthValues["EASY"]! ? const Color(0xFFC1FF3B) : Theme.of(context).cardColor,
+                        color: strengthValues["EASY"]!
+                            ? const Color(0xFFC1FF3B)
+                            : Theme.of(context).cardColor,
                       ),
                       SizedBox(
                         width: width(context) * 0.02,
@@ -112,7 +119,9 @@ class _PasswordRegisterScreenState extends State<PasswordRegisterScreen> {
                       Container(
                         width: width(context) * 0.12,
                         height: height(context) * 0.01,
-                        color: strengthValues["MEDIUM"]! ? const Color(0xFFFFD43B) : Theme.of(context).cardColor,
+                        color: strengthValues["MEDIUM"]!
+                            ? const Color(0xFFFFD43B)
+                            : Theme.of(context).cardColor,
                       ),
                       SizedBox(
                         width: width(context) * 0.02,
@@ -120,7 +129,9 @@ class _PasswordRegisterScreenState extends State<PasswordRegisterScreen> {
                       Container(
                         width: width(context) * 0.12,
                         height: height(context) * 0.01,
-                        color: strengthValues["HARD"]! ? const Color(0xFFF31B2F) : Theme.of(context).cardColor,
+                        color: strengthValues["HARD"]!
+                            ? const Color(0xFFF31B2F)
+                            : Theme.of(context).cardColor,
                       ),
                     ],
                   ),
@@ -145,8 +156,11 @@ class _PasswordRegisterScreenState extends State<PasswordRegisterScreen> {
                   }
                 });
               },
-              suffixIcon:
-                  _rPasswordController.text.isNotEmpty ? (passwordVisibility["RPASSWORD"]! ? Icons.visibility_off_outlined : Icons.visibility_outlined) : null,
+              suffixIcon: _rPasswordController.text.isNotEmpty
+                  ? (passwordVisibility["RPASSWORD"]!
+                      ? Icons.visibility_off_outlined
+                      : Icons.visibility_outlined)
+                  : null,
             ),
             SizedBox(
               width: width(context),
@@ -154,7 +168,8 @@ class _PasswordRegisterScreenState extends State<PasswordRegisterScreen> {
             ),
             Opacity(
               opacity: _isRPasswordErrorVisible ? 1 : 0,
-              child: const ErrorMessage(message: 'Las contraseñas no coinciden'),
+              child:
+                  const ErrorMessage(message: 'Las contraseñas no coinciden'),
             ),
             SizedBox(
               width: width(context),
@@ -164,11 +179,13 @@ class _PasswordRegisterScreenState extends State<PasswordRegisterScreen> {
               text: 'Finalizar',
               onPressed: () {
                 setState(() {
-                  passwordValidator = passwordScreenValidator(_passwordController.text, _rPasswordController.text);
+                  passwordValidator = passwordScreenValidator(
+                      _passwordController.text, _rPasswordController.text);
                   _isPasswordErrorVisible = passwordValidator[0];
                   _isRPasswordErrorVisible = passwordValidator[1];
                   if (!_isPasswordErrorVisible && !_isRPasswordErrorVisible) {
-                    Navigator.of(context).push(createRoute(const VerificationRegisterScreen()));
+                    Navigator.of(context)
+                        .push(createRoute(const VerificationRegisterScreen()));
                   }
                 });
               },
@@ -229,9 +246,11 @@ class _PasswordRegisterScreenState extends State<PasswordRegisterScreen> {
                             return Container();
                           },
                           transitionBuilder: (context, a1, a2, widget) {
-                            final curvedValue = Curves.easeInOutBack.transform(a1.value) - 1.0;
+                            final curvedValue =
+                                Curves.easeInOutBack.transform(a1.value) - 1.0;
                             return Transform(
-                              transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
+                              transform: Matrix4.translationValues(
+                                  0.0, curvedValue * 200, 0.0),
                               child: Opacity(
                                 opacity: a1.value,
                                 child: Scaffold(
@@ -243,22 +262,29 @@ class _PasswordRegisterScreenState extends State<PasswordRegisterScreen> {
                                       height: height(context) * 0.85,
                                       color: Theme.of(context).backgroundColor,
                                       child: Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: width(context) * 0.035),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: width(context) * 0.035),
                                         child: Column(
                                           children: [
                                             const ClosePopupButton(),
                                             Expanded(
                                               child: SingleChildScrollView(
                                                 child: Padding(
-                                                  padding: EdgeInsets.only(bottom: height(context) * 0.025),
+                                                  padding: EdgeInsets.only(
+                                                      bottom: height(context) *
+                                                          0.025),
                                                   child: Text(
                                                     condiciones,
-                                                    textAlign: TextAlign.justify,
+                                                    textAlign:
+                                                        TextAlign.justify,
                                                     style: TextStyle(
-                                                      color: Theme.of(context).primaryColor,
-                                                      fontFamily: 'Tw Cen MT Regular',
+                                                      color: Theme.of(context)
+                                                          .primaryColor,
+                                                      fontFamily:
+                                                          'Tw Cen MT Regular',
                                                       fontSize: 12.0,
-                                                      fontWeight: FontWeight.w500,
+                                                      fontWeight:
+                                                          FontWeight.w500,
                                                       letterSpacing: 1.0,
                                                       height: 2.0,
                                                     ),
@@ -300,7 +326,11 @@ class _PasswordRegisterScreenState extends State<PasswordRegisterScreen> {
   }
 }
 
-Map<String, bool> strengthValues = {"EASY": false, "MEDIUM": false, "HARD": false};
+Map<String, bool> strengthValues = {
+  "EASY": false,
+  "MEDIUM": false,
+  "HARD": false
+};
 Map<String, bool> passwordVisibility = {"PASSWORD": true, "RPASSWORD": true};
 
 void _updateMap(bool easy, bool medium, bool hard) {
@@ -309,8 +339,14 @@ void _updateMap(bool easy, bool medium, bool hard) {
 
 void _updatePasswordVisibility(String password) {
   password == "PASSWORD"
-      ? passwordVisibility = {"PASSWORD": !passwordVisibility["PASSWORD"]!, "RPASSWORD": passwordVisibility["RPASSWORD"]!}
-      : passwordVisibility = {"PASSWORD": passwordVisibility["PASSWORD"]!, "RPASSWORD": !passwordVisibility["RPASSWORD"]!};
+      ? passwordVisibility = {
+          "PASSWORD": !passwordVisibility["PASSWORD"]!,
+          "RPASSWORD": passwordVisibility["RPASSWORD"]!
+        }
+      : passwordVisibility = {
+          "PASSWORD": passwordVisibility["PASSWORD"]!,
+          "RPASSWORD": !passwordVisibility["RPASSWORD"]!
+        };
 }
 
 void _updateContainerColor(Strength strength) {

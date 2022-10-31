@@ -20,7 +20,8 @@ Route createRoute(Widget route) {
 }
 
 bool isValidEmail(String? email) {
-  return (email!.isNotEmpty && RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}').hasMatch(email));
+  return (email!.isNotEmpty &&
+      RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}').hasMatch(email));
 }
 
 /// Password Checks
@@ -37,12 +38,23 @@ Strength checkPasswordStrength(String password) {
      *  o 'minúsculas, numeros y especiales' o 'mayúsculas, numeros y especiales' -> MEDIUM
      */
     //  Si tiene minúsculas, mayúsculas, números y especiales -> HARD
-    if ((_hasMinus(password) && _hasMayus(password) && _hasNumbers(password) && _hasSpecialCharacters(password))) {
+    if ((_hasMinus(password) &&
+        _hasMayus(password) &&
+        _hasNumbers(password) &&
+        _hasSpecialCharacters(password))) {
       return Strength.hard;
-    } else if ((_hasMinus(password) && _hasMayus(password) && _hasNumbers(password)) ||
-        (_hasMinus(password) && _hasMayus(password) && _hasSpecialCharacters(password)) ||
-        (_hasMinus(password) && _hasNumbers(password) && _hasSpecialCharacters(password)) ||
-        (_hasMayus(password) && _hasNumbers(password) && _hasSpecialCharacters(password))) {
+    } else if ((_hasMinus(password) &&
+            _hasMayus(password) &&
+            _hasNumbers(password)) ||
+        (_hasMinus(password) &&
+            _hasMayus(password) &&
+            _hasSpecialCharacters(password)) ||
+        (_hasMinus(password) &&
+            _hasNumbers(password) &&
+            _hasSpecialCharacters(password)) ||
+        (_hasMayus(password) &&
+            _hasNumbers(password) &&
+            _hasSpecialCharacters(password))) {
       return Strength.medium;
     } else if ((_hasMinus(password) && _hasMayus(password)) ||
         (_hasMinus(password) && _hasNumbers(password)) ||
@@ -64,11 +76,20 @@ Strength checkPasswordStrength(String password) {
     if (_areAllCharactersEquals(password)) {
       return Strength.easy;
     }
-    if ((_hasMinus(password) && _hasMayus(password) && _hasNumbers(password) && _hasSpecialCharacters(password)) ||
+    if ((_hasMinus(password) &&
+            _hasMayus(password) &&
+            _hasNumbers(password) &&
+            _hasSpecialCharacters(password)) ||
         (_hasMinus(password) && _hasMayus(password) && _hasNumbers(password)) ||
-        (_hasMinus(password) && _hasMayus(password) && _hasSpecialCharacters(password)) ||
-        (_hasMinus(password) && _hasNumbers(password) && _hasSpecialCharacters(password)) ||
-        (_hasMayus(password) && _hasNumbers(password) && _hasSpecialCharacters(password))) {
+        (_hasMinus(password) &&
+            _hasMayus(password) &&
+            _hasSpecialCharacters(password)) ||
+        (_hasMinus(password) &&
+            _hasNumbers(password) &&
+            _hasSpecialCharacters(password)) ||
+        (_hasMayus(password) &&
+            _hasNumbers(password) &&
+            _hasSpecialCharacters(password))) {
       return Strength.hard;
     } else if ((_hasMinus(password) && _hasMayus(password)) ||
         (_hasMinus(password) && _hasNumbers(password)) ||
@@ -86,10 +107,22 @@ Strength checkPasswordStrength(String password) {
     if (_areAllCharactersEquals(password)) {
       return Strength.easy;
     }
-    if ((_hasMinus(password) && !_hasMayus(password) && !_hasNumbers(password) && !_hasSpecialCharacters(password)) ||
-        (!_hasMinus(password) && _hasMayus(password) && !_hasNumbers(password) && !_hasSpecialCharacters(password)) ||
-        (!_hasMinus(password) && !_hasMayus(password) && _hasNumbers(password) && !_hasSpecialCharacters(password)) ||
-        (!_hasMinus(password) && !_hasMayus(password) && !_hasNumbers(password) && _hasSpecialCharacters(password))) {
+    if ((_hasMinus(password) &&
+            !_hasMayus(password) &&
+            !_hasNumbers(password) &&
+            !_hasSpecialCharacters(password)) ||
+        (!_hasMinus(password) &&
+            _hasMayus(password) &&
+            !_hasNumbers(password) &&
+            !_hasSpecialCharacters(password)) ||
+        (!_hasMinus(password) &&
+            !_hasMayus(password) &&
+            _hasNumbers(password) &&
+            !_hasSpecialCharacters(password)) ||
+        (!_hasMinus(password) &&
+            !_hasMayus(password) &&
+            !_hasNumbers(password) &&
+            _hasSpecialCharacters(password))) {
       return Strength.medium;
     } else {
       return Strength.hard;
@@ -149,7 +182,9 @@ void resetTextIfNoFocus(TextEditingController controller, FocusNode focusNode) {
 }
 
 IconData? hideShowIcon(TextEditingController controller, FocusNode focusNode) {
-  return controller.text.isNotEmpty && focusNode.hasPrimaryFocus ? Icons.cancel_outlined : null;
+  return controller.text.isNotEmpty && focusNode.hasPrimaryFocus
+      ? Icons.cancel_outlined
+      : null;
 }
 
 List<bool> dataScreenValidator(String username, String name, String phone) {
