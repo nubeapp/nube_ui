@@ -5,10 +5,12 @@ class ContainerCountryCodeNumber extends StatefulWidget {
   const ContainerCountryCodeNumber({super.key});
 
   @override
-  State<ContainerCountryCodeNumber> createState() => _ContainerCountryCodeNumberState();
+  State<ContainerCountryCodeNumber> createState() =>
+      _ContainerCountryCodeNumberState();
 }
 
-class _ContainerCountryCodeNumberState extends State<ContainerCountryCodeNumber> {
+class _ContainerCountryCodeNumberState
+    extends State<ContainerCountryCodeNumber> {
   static int initialIndex = 207;
   static String countryName = 'Spain';
 
@@ -20,9 +22,11 @@ class _ContainerCountryCodeNumberState extends State<ContainerCountryCodeNumber>
           showGeneralDialog(
             barrierColor: Colors.black.withOpacity(0.75),
             transitionBuilder: (context, a1, a2, widget) {
-              final curvedValue = Curves.easeInOutBack.transform(a1.value) - 1.0;
+              final curvedValue =
+                  Curves.easeInOutBack.transform(a1.value) - 1.0;
               return Transform(
-                transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
+                transform:
+                    Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
                 child: Opacity(
                   opacity: a1.value,
                   child: CountryCodeNumberPicker(initialIndex: initialIndex),
@@ -48,7 +52,7 @@ class _ContainerCountryCodeNumberState extends State<ContainerCountryCodeNumber>
       },
       child: Container(
         width: width(context) * 0.25,
-        height: height(context) * 0.065,
+        height: height(context) * 0.06,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
           color: Theme.of(context).cardColor,

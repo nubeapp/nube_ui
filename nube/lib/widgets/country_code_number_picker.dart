@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import '../imports.dart';
 
 class CountryCodeNumberPicker extends StatefulWidget {
-  const CountryCodeNumberPicker({Key? key, required this.initialIndex}) : super(key: key);
+  const CountryCodeNumberPicker({Key? key, required this.initialIndex})
+      : super(key: key);
 
   final int initialIndex;
 
   @override
-  State<CountryCodeNumberPicker> createState() => _CountryCodeNumberPickerState(initialIndex);
+  State<CountryCodeNumberPicker> createState() =>
+      _CountryCodeNumberPickerState(initialIndex);
 }
 
 class _CountryCodeNumberPickerState extends State<CountryCodeNumberPicker> {
@@ -32,7 +34,7 @@ class _CountryCodeNumberPickerState extends State<CountryCodeNumberPicker> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.transparent,
       body: Center(
         child: Container(
@@ -55,7 +57,9 @@ class _CountryCodeNumberPickerState extends State<CountryCodeNumberPicker> {
                     setState(() {
                       results = List.empty(growable: true);
                       for (Country country in countries) {
-                        if (country.name.toLowerCase().contains(value.toLowerCase())) {
+                        if (country.name
+                            .toLowerCase()
+                            .contains(value.toLowerCase())) {
                           results.add(country);
                         }
                       }
@@ -108,12 +112,19 @@ class _CountryCodeNumberPickerState extends State<CountryCodeNumberPicker> {
                                   child: Container(
                                     width: width(context),
                                     height: height(context) * 0.05,
-                                    margin: EdgeInsets.only(bottom: height(context) * 0.005, top: height(context) * 0.005),
-                                    decoration: countryName == results[index].name
+                                    margin: EdgeInsets.only(
+                                        bottom: height(context) * 0.005,
+                                        top: height(context) * 0.005),
+                                    decoration: countryName ==
+                                            results[index].name
                                         ? BoxDecoration(
                                             color: Theme.of(context).cardColor,
-                                            borderRadius: BorderRadius.circular(10.0),
-                                            border: Border.all(color: Theme.of(context).highlightColor, width: 2.0))
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            border: Border.all(
+                                                color: Theme.of(context)
+                                                    .highlightColor,
+                                                width: 2.0))
                                         : null,
                                     child: Row(
                                       children: [
@@ -136,23 +147,30 @@ class _CountryCodeNumberPickerState extends State<CountryCodeNumberPicker> {
                                         SizedBox(
                                           width: width(context) * 0.18,
                                           child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
                                             children: [
                                               Text(
                                                 '+',
                                                 style: TextStyle(
-                                                  color: Theme.of(context).primaryColor,
-                                                  fontFamily: 'Tw Cen MT Condensed',
+                                                  color: Theme.of(context)
+                                                      .primaryColor,
+                                                  fontFamily:
+                                                      'Tw Cen MT Condensed',
                                                   fontSize: 14.0,
                                                   fontWeight: FontWeight.w600,
                                                   letterSpacing: 1,
                                                 ),
                                               ),
                                               Text(
-                                                results[index].dialCode.substring(1),
+                                                results[index]
+                                                    .dialCode
+                                                    .substring(1),
                                                 style: TextStyle(
-                                                  color: Theme.of(context).primaryColor,
-                                                  fontFamily: 'Tw Cen MT Condensed',
+                                                  color: Theme.of(context)
+                                                      .primaryColor,
+                                                  fontFamily:
+                                                      'Tw Cen MT Condensed',
                                                   fontSize: 20.0,
                                                   fontWeight: FontWeight.w600,
                                                   letterSpacing: 1,
@@ -168,8 +186,10 @@ class _CountryCodeNumberPickerState extends State<CountryCodeNumberPicker> {
                                               results[index].name,
                                               overflow: TextOverflow.ellipsis,
                                               style: TextStyle(
-                                                color: Theme.of(context).primaryColor,
-                                                fontFamily: 'Tw Cen MT Condensed',
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                                fontFamily:
+                                                    'Tw Cen MT Condensed',
                                                 fontSize: 20.0,
                                                 fontWeight: FontWeight.w600,
                                                 letterSpacing: 1,
