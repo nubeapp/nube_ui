@@ -1,5 +1,9 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'dart:core';
+import 'imports.dart';
+import 'package:http/http.dart' as http;
+import 'dart:math' as math;
 
 Route createRoute(Widget route) {
   return PageRouteBuilder(
@@ -20,8 +24,7 @@ Route createRoute(Widget route) {
 }
 
 bool isValidEmail(String? email) {
-  return (email!.isNotEmpty &&
-      RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}').hasMatch(email));
+  return (email!.isNotEmpty && RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}').hasMatch(email));
 }
 
 /// Password Checks
@@ -38,23 +41,12 @@ Strength checkPasswordStrength(String password) {
      *  o 'minúsculas, numeros y especiales' o 'mayúsculas, numeros y especiales' -> MEDIUM
      */
     //  Si tiene minúsculas, mayúsculas, números y especiales -> HARD
-    if ((_hasMinus(password) &&
-        _hasMayus(password) &&
-        _hasNumbers(password) &&
-        _hasSpecialCharacters(password))) {
+    if ((_hasMinus(password) && _hasMayus(password) && _hasNumbers(password) && _hasSpecialCharacters(password))) {
       return Strength.hard;
-    } else if ((_hasMinus(password) &&
-            _hasMayus(password) &&
-            _hasNumbers(password)) ||
-        (_hasMinus(password) &&
-            _hasMayus(password) &&
-            _hasSpecialCharacters(password)) ||
-        (_hasMinus(password) &&
-            _hasNumbers(password) &&
-            _hasSpecialCharacters(password)) ||
-        (_hasMayus(password) &&
-            _hasNumbers(password) &&
-            _hasSpecialCharacters(password))) {
+    } else if ((_hasMinus(password) && _hasMayus(password) && _hasNumbers(password)) ||
+        (_hasMinus(password) && _hasMayus(password) && _hasSpecialCharacters(password)) ||
+        (_hasMinus(password) && _hasNumbers(password) && _hasSpecialCharacters(password)) ||
+        (_hasMayus(password) && _hasNumbers(password) && _hasSpecialCharacters(password))) {
       return Strength.medium;
     } else if ((_hasMinus(password) && _hasMayus(password)) ||
         (_hasMinus(password) && _hasNumbers(password)) ||
@@ -76,20 +68,11 @@ Strength checkPasswordStrength(String password) {
     if (_areAllCharactersEquals(password)) {
       return Strength.easy;
     }
-    if ((_hasMinus(password) &&
-            _hasMayus(password) &&
-            _hasNumbers(password) &&
-            _hasSpecialCharacters(password)) ||
+    if ((_hasMinus(password) && _hasMayus(password) && _hasNumbers(password) && _hasSpecialCharacters(password)) ||
         (_hasMinus(password) && _hasMayus(password) && _hasNumbers(password)) ||
-        (_hasMinus(password) &&
-            _hasMayus(password) &&
-            _hasSpecialCharacters(password)) ||
-        (_hasMinus(password) &&
-            _hasNumbers(password) &&
-            _hasSpecialCharacters(password)) ||
-        (_hasMayus(password) &&
-            _hasNumbers(password) &&
-            _hasSpecialCharacters(password))) {
+        (_hasMinus(password) && _hasMayus(password) && _hasSpecialCharacters(password)) ||
+        (_hasMinus(password) && _hasNumbers(password) && _hasSpecialCharacters(password)) ||
+        (_hasMayus(password) && _hasNumbers(password) && _hasSpecialCharacters(password))) {
       return Strength.hard;
     } else if ((_hasMinus(password) && _hasMayus(password)) ||
         (_hasMinus(password) && _hasNumbers(password)) ||
@@ -107,22 +90,10 @@ Strength checkPasswordStrength(String password) {
     if (_areAllCharactersEquals(password)) {
       return Strength.easy;
     }
-    if ((_hasMinus(password) &&
-            !_hasMayus(password) &&
-            !_hasNumbers(password) &&
-            !_hasSpecialCharacters(password)) ||
-        (!_hasMinus(password) &&
-            _hasMayus(password) &&
-            !_hasNumbers(password) &&
-            !_hasSpecialCharacters(password)) ||
-        (!_hasMinus(password) &&
-            !_hasMayus(password) &&
-            _hasNumbers(password) &&
-            !_hasSpecialCharacters(password)) ||
-        (!_hasMinus(password) &&
-            !_hasMayus(password) &&
-            !_hasNumbers(password) &&
-            _hasSpecialCharacters(password))) {
+    if ((_hasMinus(password) && !_hasMayus(password) && !_hasNumbers(password) && !_hasSpecialCharacters(password)) ||
+        (!_hasMinus(password) && _hasMayus(password) && !_hasNumbers(password) && !_hasSpecialCharacters(password)) ||
+        (!_hasMinus(password) && !_hasMayus(password) && _hasNumbers(password) && !_hasSpecialCharacters(password)) ||
+        (!_hasMinus(password) && !_hasMayus(password) && !_hasNumbers(password) && _hasSpecialCharacters(password))) {
       return Strength.medium;
     } else {
       return Strength.hard;
@@ -182,9 +153,7 @@ void resetTextIfNoFocus(TextEditingController controller, FocusNode focusNode) {
 }
 
 IconData? hideShowIcon(TextEditingController controller, FocusNode focusNode) {
-  return controller.text.isNotEmpty && focusNode.hasPrimaryFocus
-      ? Icons.cancel_outlined
-      : null;
+  return controller.text.isNotEmpty && focusNode.hasPrimaryFocus ? Icons.cancel_outlined : null;
 }
 
 List<bool> dataScreenValidator(String username, String name, String phone) {
@@ -213,4 +182,43 @@ List<bool> passwordScreenValidator(String password, String rPassword) {
   } else {
     return [false, false];
   }
+}
+
+/// Send email
+
+Future sendEmail(String email, String name, String code) async {
+  log('Sending email...');
+  final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
+  const serviceId = 'service_4juazb9';
+  const templateId = 'template_ovslkk6';
+  const publicKey = 'm6_PyyRTyKWUZmEUA';
+  const privateKey = 'ZIyAmgPSEegPkyc5Wg_5x';
+  try {
+    final response = await http.post(url,
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'service_id': serviceId,
+          'template_id': templateId,
+          'user_id': publicKey,
+          'accessToken': privateKey,
+          'template_params': {
+            'user_email': email,
+            'name': name,
+            'verification_code': code,
+          }
+        }));
+    return response.statusCode;
+  } catch (error) {
+    log("$error");
+  }
+}
+
+String generateOTP(int length) {
+  String otp = '';
+  math.Random random = math.Random();
+  for (int i = 0; i < length; i++) {
+    int char = random.nextInt(9);
+    otp += char.toString();
+  }
+  return otp;
 }

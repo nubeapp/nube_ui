@@ -4,13 +4,17 @@ import 'package:nube/imports.dart';
 class ContainerCountryCodeNumber extends StatefulWidget {
   const ContainerCountryCodeNumber({super.key});
 
+  static String countryName = 'Spain';
+
   @override
-  State<ContainerCountryCodeNumber> createState() => _ContainerCountryCodeNumberState();
+  State<ContainerCountryCodeNumber> createState() => _ContainerCountryCodeNumberState(countryName);
 }
 
 class _ContainerCountryCodeNumberState extends State<ContainerCountryCodeNumber> {
   static int initialIndex = 207;
-  static String countryName = 'Spain';
+  String countryName;
+
+  _ContainerCountryCodeNumberState(this.countryName);
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +42,7 @@ class _ContainerCountryCodeNumberState extends State<ContainerCountryCodeNumber>
               return Container();
             },
           ).then((value) {
+            ContainerCountryCodeNumber.countryName = value as String;
             setState(() {
               countryName = value as String;
               for (int i = 0; i < countries.length; i++) {
@@ -51,7 +56,7 @@ class _ContainerCountryCodeNumberState extends State<ContainerCountryCodeNumber>
       },
       child: Container(
         width: width(context) * 0.25,
-        height: height(context) * 0.06,
+        height: Platform.isIOS ? height(context) * 0.06 : height(context) * 0.065,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
           color: Theme.of(context).cardColor,

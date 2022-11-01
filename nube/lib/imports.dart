@@ -1,5 +1,6 @@
 /* Models */
 export '../models/country.dart';
+export '../models/user.dart';
 
 /* Login Screen */
 
@@ -29,3 +30,4 @@ export 'utils.dart';
 /* General */
 export 'dart:developer';
 export 'package:flutter/services.dart';
+export 'dart:io';

@@ -12,7 +12,7 @@ class _MainRegisterScreenState extends State<MainRegisterScreen> {
   /*
    *  Variables
    */
-  static final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final FocusNode _emailFocus = FocusNode();
   bool _isEmailErrorVisible = false;
 
@@ -20,11 +20,12 @@ class _MainRegisterScreenState extends State<MainRegisterScreen> {
   void initState() {
     _emailFocus.addListener(() {});
     super.initState();
+    _emailController.text = user.getEmail();
   }
 
   @override
   void dispose() {
-    // _emailController.dispose();
+    _emailController.dispose();
     _emailFocus.dispose();
     super.dispose();
   }
@@ -117,10 +118,12 @@ class _MainRegisterScreenState extends State<MainRegisterScreen> {
             ),
             Button(
               text: 'Continuar',
-              onPressed: () {
+              onPressed: () async {
+                countries = await loadJson();
                 setState(() {
                   if (isValidEmail(_emailController.text)) {
                     _isEmailErrorVisible = false;
+                    user.saveUserData(_emailController.text, null, null, null, null, null, null, null);
                     Navigator.of(context).push(createRoute(const DataRegisterScreen()));
                   } else {
                     _isEmailErrorVisible = true;

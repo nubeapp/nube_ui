@@ -1,13 +1,21 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import '../imports.dart';
 
 List<Country> countries = List.empty(growable: true);
+User user = User(
+  email: '',
+  username: '',
+  name: '',
+  countryName: '',
+  phone: '',
+  password: '',
+);
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  countries = await loadJson();
   runApp(const MyApp());
 }
 
@@ -16,7 +24,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+    if (Platform.isAndroid) {
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+    }
     return NotificationListener<OverscrollIndicatorNotification>(
       onNotification: (OverscrollIndicatorNotification overscroll) {
         overscroll.disallowIndicator();
@@ -27,8 +37,7 @@ class MyApp extends StatelessWidget {
           'main_screen': (context) => const MainRegisterScreen(),
           'data_screen': (context) => const DataRegisterScreen(),
           'password_screen': (context) => const PasswordRegisterScreen(),
-          'verification_screen': (context) =>
-              const VerificationRegisterScreen(),
+          'verification_screen': (context) => const VerificationRegisterScreen(),
         },
         initialRoute: 'main_screen',
         debugShowCheckedModeBanner: false,
@@ -43,8 +52,6 @@ class MyApp extends StatelessWidget {
 Future<List<Country>> loadJson() async {
   String data = await rootBundle.loadString('assets/json/countries.json');
   var countriesObjsJson = jsonDecode(data)['countries'] as List;
-  List<Country> countryObj = countriesObjsJson
-      .map((countryJson) => Country.fromJson(countryJson))
-      .toList();
+  List<Country> countryObj = countriesObjsJson.map((countryJson) => Country.fromJson(countryJson)).toList();
   return countryObj;
 }

@@ -160,7 +160,9 @@ class _CountryCodeNumberPickerState extends State<CountryCodeNumberPicker> {
                                     ),
                                   ),
                                 ),
-                                const Divider()
+                                const Divider(
+                                  thickness: 2.0,
+                                )
                               ],
                             );
                           },
