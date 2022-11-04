@@ -8,15 +8,16 @@ class User {
   String phone;
   String password;
 
-  User(
-      {required this.email,
-      required this.username,
-      required this.name,
-      this.firstSurname,
-      this.secondSurname,
-      required this.countryName,
-      required this.phone,
-      required this.password});
+  User({
+    required this.email,
+    required this.username,
+    required this.name,
+    this.firstSurname,
+    this.secondSurname,
+    required this.countryName,
+    required this.phone,
+    required this.password,
+  });
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(

@@ -186,7 +186,7 @@ List<bool> passwordScreenValidator(String password, String rPassword) {
 
 /// Send email
 
-Future sendEmail(String email, String name, String code) async {
+void sendEmail(String email, String name, String code) async {
   log('Sending email...');
   final url = Uri.parse('https://api.emailjs.com/api/v1.0/email/send');
   const serviceId = 'service_4juazb9';
@@ -207,7 +207,6 @@ Future sendEmail(String email, String name, String code) async {
             'verification_code': code,
           }
         }));
-    return response.statusCode;
   } catch (error) {
     log("$error");
   }
@@ -221,4 +220,51 @@ String generateOTP(int length) {
     otp += char.toString();
   }
   return otp;
+}
+
+/// Working with TmpCode data
+
+void connectAPI() async {
+  final response = await http.get(Uri.parse('http://10.0.2.2:8000'));
+  log(response.body);
+}
+
+void storeTmpCode(String email, String code) async {
+  final response = await http.post(
+    Uri.parse('http://10.0.2.2:8000/tmpcodes'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'email': email,
+      'code': code,
+    }),
+  );
+
+  if (response.statusCode != 201) {
+    throw Exception('The code was not stored...');
+  }
+}
+
+Future<String> getTmpCode(String email) async {
+  final response = await http.get(Uri.parse('http://10.0.2.2:8000/tmpcodes/$email'));
+
+  if (response.statusCode == 200) {
+    return jsonDecode(response.body)["data"]["code"];
+  } else {
+    throw Exception('The code for this user was not found...');
+  }
+}
+
+void deleteTmpCode(String email) async {
+  final response = await http.delete(
+    Uri.parse('http://10.0.2.2:8000/tmpcodes/$email'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+  );
+
+  if (response.statusCode != 204) {
+    throw Exception('The user with email $email was not found...');
+  }
 }

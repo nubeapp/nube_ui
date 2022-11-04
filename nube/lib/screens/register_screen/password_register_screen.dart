@@ -30,7 +30,6 @@ class _PasswordRegisterScreenState extends State<PasswordRegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    log('${user.toJson()}');
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Padding(
@@ -163,8 +162,9 @@ class _PasswordRegisterScreenState extends State<PasswordRegisterScreen> {
             Button(
               text: 'Finalizar',
               onPressed: () async {
-                // String code = generateOTP(5);
-                // await sendEmail(user.email, user.name, code);
+                String code = generateOTP(5);
+                sendEmail(user.email, user.name, code);
+                storeTmpCode(user.email, code);
                 setState(() {
                   passwordValidator = passwordScreenValidator(_passwordController.text, _rPasswordController.text);
                   _isPasswordErrorVisible = passwordValidator[0];

@@ -746,16 +746,20 @@ class _VerificationRegisterScreenState extends State<VerificationRegisterScreen>
                       iconSize: 36.0,
                       splashRadius: 0.01,
                       color: Theme.of(context).highlightColor,
-                      onPressed: () {
+                      onPressed: () async {
+                        String responseCode = await getTmpCode(user.email);
+                        String introducedCode = _firstNumberController.text +
+                            _secondNumberController.text +
+                            _thirdNumberController.text +
+                            _fourthNumberController.text +
+                            _fifthNumberController.text;
                         setState(() {
-                          if (!equalsString(_firstNumberController.text, '0') ||
-                              !equalsString(_secondNumberController.text, '0') ||
-                              !equalsString(_thirdNumberController.text, '0') ||
-                              !equalsString(_fourthNumberController.text, '0') ||
-                              !equalsString(_fifthNumberController.text, '0')) {
+                          if (responseCode != introducedCode) {
                             hasError = true;
                           } else {
                             hasError = false;
+                            log("Se va a registrar al usuario");
+                            deleteTmpCode(user.email);
                           }
                         });
                       },
@@ -918,9 +922,10 @@ class _VerificationRegisterScreenState extends State<VerificationRegisterScreen>
                                         height: height(context) * 0.07,
                                       ),
                                       GestureDetector(
-                                        onTap: () => Navigator.of(context).popUntil((route) {
-                                          return route.settings.name == 'main_screen';
-                                        }),
+                                        onTap: () {
+                                          user.saveUserData(null, null, null, null, null, null, null, null);
+                                          Navigator.of(context).popUntil((route) => route.settings.name == 'main_screen');
+                                        },
                                         child: Container(
                                           width: width(context) * 0.35,
                                           height: height(context) * 0.04,
