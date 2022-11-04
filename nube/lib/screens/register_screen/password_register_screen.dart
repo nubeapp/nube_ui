@@ -163,7 +163,7 @@ class _PasswordRegisterScreenState extends State<PasswordRegisterScreen> {
               text: 'Finalizar',
               onPressed: () async {
                 String code = generateOTP(5);
-                sendEmail(user.email, user.name, code);
+                // sendEmail(user.email, user.name, code);
                 storeTmpCode(user.email, code);
                 setState(() {
                   passwordValidator = passwordScreenValidator(_passwordController.text, _rPasswordController.text);
