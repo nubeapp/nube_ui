@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:nube/imports.dart';
 
@@ -25,8 +27,19 @@ class _VerificationRegisterScreenState extends State<VerificationRegisterScreen>
   int currentFocus = 1;
   bool hasError = false;
 
+  Timer? countdownTimer;
+  Duration expirationTime = const Duration(seconds: 120);
+  bool isRunning = true;
+
   @override
   Widget build(BuildContext context) {
+    String strDigits(int n) => n.toString().padLeft(2, '0');
+    final minutes = strDigits(expirationTime.inMinutes.remainder(60));
+    final seconds = strDigits(expirationTime.inSeconds.remainder(60));
+    if (isRunning) {
+      startTimer();
+      isRunning = false;
+    }
     return WillPopScope(
       onWillPop: () async {
         return false;
@@ -40,7 +53,7 @@ class _VerificationRegisterScreenState extends State<VerificationRegisterScreen>
             children: [
               SizedBox(
                 width: width(context),
-                height: height(context) * 0.1,
+                height: height(context) * 0.07,
               ),
               Text(
                 'Introduzca el código de verificación que se ha enviado al correo electrónico',
@@ -302,7 +315,13 @@ class _VerificationRegisterScreenState extends State<VerificationRegisterScreen>
                     width: width(context) * 0.015,
                   ),
                   GestureDetector(
-                    onTap: () => log("Reenviar"),
+                    onTap: () {
+                      log('Reenviar');
+                      String code = generateOTP(5);
+                      // sendEmail(user.email, user.name, code);
+                      updateTmpCode(user.email, code);
+                      resetTimer();
+                    },
                     child: Text(
                       'Reenviar',
                       style: TextStyle(
@@ -317,8 +336,21 @@ class _VerificationRegisterScreenState extends State<VerificationRegisterScreen>
                 ],
               ),
               SizedBox(
+                height: height(context) * 0.04,
+              ),
+              Text(
+                "$minutes:$seconds",
+                style: TextStyle(
+                  color: expirationTime.inSeconds == 0 ? Theme.of(context).errorColor : Theme.of(context).primaryColor,
+                  fontFamily: 'Tw Cen MT Regular',
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.normal,
+                  letterSpacing: 1.0,
+                ),
+              ),
+              SizedBox(
                 width: width(context),
-                height: height(context) * 0.07,
+                height: height(context) * 0.05,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -755,7 +787,10 @@ class _VerificationRegisterScreenState extends State<VerificationRegisterScreen>
                             _fifthNumberController.text;
                         setState(() {
                           if (responseCode != introducedCode) {
+                            log('El código no es correcto');
                             hasError = true;
+                          } else if (expirationTime.inSeconds == 0) {
+                            log('El código ha expirado');
                           } else {
                             hasError = false;
                             log("Se va a registrar al usuario");
@@ -923,6 +958,8 @@ class _VerificationRegisterScreenState extends State<VerificationRegisterScreen>
                                       ),
                                       GestureDetector(
                                         onTap: () {
+                                          countdownTimer!.cancel();
+                                          deleteTmpCode(user.email);
                                           user.saveUserData(null, null, null, null, null, null, null, null);
                                           Navigator.of(context).popUntil((route) => route.settings.name == 'main_screen');
                                         },
@@ -974,5 +1011,25 @@ class _VerificationRegisterScreenState extends State<VerificationRegisterScreen>
         ),
       ),
     );
+  }
+
+  void startTimer() {
+    countdownTimer = Timer.periodic(const Duration(seconds: 1), (_) => setCountDown());
+  }
+
+  void resetTimer() {
+    setState(() => expirationTime = const Duration(seconds: 120));
+  }
+
+  void setCountDown() {
+    const reduceSecondsBy = 1;
+    setState(() {
+      final seconds = expirationTime.inSeconds - reduceSecondsBy;
+      if (seconds < 0) {
+        countdownTimer!.cancel();
+      } else {
+        expirationTime = Duration(seconds: seconds);
+      }
+    });
   }
 }

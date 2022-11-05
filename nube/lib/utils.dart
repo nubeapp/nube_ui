@@ -246,6 +246,23 @@ void storeTmpCode(String email, String code) async {
   }
 }
 
+void updateTmpCode(String email, String code) async {
+  final response = await http.put(
+    Uri.parse('http://10.0.2.2:8000/tmpcodes/$email'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'email': email,
+      'code': code,
+    }),
+  );
+
+  if (response.statusCode != 200) {
+    throw Exception('The code was not stored...');
+  }
+}
+
 Future<String> getTmpCode(String email) async {
   final response = await http.get(Uri.parse('http://10.0.2.2:8000/tmpcodes/$email'));
 
