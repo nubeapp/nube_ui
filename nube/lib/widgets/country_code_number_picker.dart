@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import '../imports.dart';
 
 class CountryCodeNumberPicker extends StatefulWidget {
-  const CountryCodeNumberPicker({Key? key, required this.initialIndex, required this.countryName}) : super(key: key);
+  const CountryCodeNumberPicker({Key? key, required this.initialIndex, required this.country}) : super(key: key);
 
   final int initialIndex;
-  final String countryName;
+  final String country;
 
   @override
-  State<CountryCodeNumberPicker> createState() => _CountryCodeNumberPickerState(initialIndex, countryName);
+  State<CountryCodeNumberPicker> createState() => _CountryCodeNumberPickerState(initialIndex, country);
 }
 
 class _CountryCodeNumberPickerState extends State<CountryCodeNumberPicker> {
@@ -16,12 +16,12 @@ class _CountryCodeNumberPickerState extends State<CountryCodeNumberPicker> {
   *  Variables
   */
   late int initialIndex;
-  late String countryName;
+  late String country;
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocus = FocusNode();
   List<Country> results = List.empty(growable: true);
 
-  _CountryCodeNumberPickerState(this.initialIndex, this.countryName);
+  _CountryCodeNumberPickerState(this.initialIndex, this.country);
 
   @override
   void initState() {
@@ -43,7 +43,7 @@ class _CountryCodeNumberPickerState extends State<CountryCodeNumberPicker> {
             padding: EdgeInsets.symmetric(horizontal: width(context) * 0.035),
             child: Column(
               children: [
-                ClosePopupButton(value: countryName),
+                ClosePopupButton(value: country),
                 InputField(
                   focusNode: _searchFocus,
                   hintText: 'Buscar por país...',
@@ -94,7 +94,7 @@ class _CountryCodeNumberPickerState extends State<CountryCodeNumberPicker> {
                                 GestureDetector(
                                   onTap: () {
                                     setState(() {
-                                      countryName = results[index].name;
+                                      country = results[index].name;
                                       initialIndex = index;
                                     });
                                   },
@@ -102,7 +102,7 @@ class _CountryCodeNumberPickerState extends State<CountryCodeNumberPicker> {
                                     width: width(context),
                                     height: height(context) * 0.05,
                                     margin: EdgeInsets.only(bottom: height(context) * 0.005, top: height(context) * 0.005),
-                                    decoration: countryName == results[index].name
+                                    decoration: country == results[index].name
                                         ? BoxDecoration(
                                             color: Theme.of(context).cardColor,
                                             borderRadius: BorderRadius.circular(10.0),

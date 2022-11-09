@@ -8,13 +8,14 @@ User user = User(
   email: '',
   username: '',
   name: '',
-  countryName: '',
+  country: '',
   phone: '',
   password: '',
 );
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  countries = await loadJson();
   runApp(const MyApp());
 }
 
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
         return false;
       },
       child: MaterialApp(
+        // showPerformanceOverlay: true,
         routes: {
           'main_screen': (context) => const MainRegisterScreen(),
           'data_screen': (context) => const DataRegisterScreen(),

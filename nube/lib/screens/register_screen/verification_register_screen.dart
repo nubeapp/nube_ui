@@ -794,6 +794,7 @@ class _VerificationRegisterScreenState extends State<VerificationRegisterScreen>
                           } else {
                             hasError = false;
                             log("Se va a registrar al usuario");
+                            storeUser(user);
                             deleteTmpCode(user.email);
                           }
                         });

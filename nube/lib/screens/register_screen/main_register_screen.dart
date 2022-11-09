@@ -15,12 +15,18 @@ class _MainRegisterScreenState extends State<MainRegisterScreen> {
   final TextEditingController _emailController = TextEditingController();
   final FocusNode _emailFocus = FocusNode();
   bool _isEmailErrorVisible = false;
+  bool _isUserRegisteredError = false;
 
   @override
   void initState() {
-    _emailFocus.addListener(() {});
+    _emailFocus.addListener(() async {
+      if (await getUserByEmail(_emailController.text) == 200) {
+        _isUserRegisteredError = true;
+      } else {
+        _isUserRegisteredError = false;
+      }
+    });
     super.initState();
-    _emailController.text = user.getEmail();
   }
 
   @override
@@ -91,7 +97,7 @@ class _MainRegisterScreenState extends State<MainRegisterScreen> {
             InputField(
               focusNode: _emailFocus,
               hintText: 'Correo electrónico',
-              hasError: _isEmailErrorVisible,
+              hasError: _isEmailErrorVisible || _isUserRegisteredError,
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.done,
               obscureText: false,
@@ -109,8 +115,8 @@ class _MainRegisterScreenState extends State<MainRegisterScreen> {
               height: height(context) * 0.01,
             ),
             Opacity(
-              opacity: _isEmailErrorVisible ? 1 : 0,
-              child: const ErrorMessage(message: 'Introduce un email válido'),
+              opacity: _isEmailErrorVisible ? 1 : (_isUserRegisteredError ? 1 : 0),
+              child: ErrorMessage(message: _isEmailErrorVisible ? 'Introduce un email válido' : (_isUserRegisteredError ? 'El email ya está registrado' : '')),
             ),
             SizedBox(
               width: width(context),
@@ -119,12 +125,17 @@ class _MainRegisterScreenState extends State<MainRegisterScreen> {
             Button(
               text: 'Continuar',
               onPressed: () async {
-                countries = await loadJson();
+                bool isUserRegistered = await getUserByEmail(_emailController.text) == 200;
                 setState(() {
-                  if (isValidEmail(_emailController.text)) {
+                  if (isValidEmail(_emailController.text) && !isUserRegistered) {
                     _isEmailErrorVisible = false;
+                    _isUserRegisteredError = false;
                     user.saveUserData(_emailController.text, null, null, null, null, null, null, null);
+                    FocusManager.instance.primaryFocus?.unfocus();
                     Navigator.of(context).push(createRoute(const DataRegisterScreen()));
+                  } else if (isValidEmail(_emailController.text) && isUserRegistered) {
+                    _isEmailErrorVisible = false;
+                    _isUserRegisteredError = true;
                   } else {
                     _isEmailErrorVisible = true;
                   }

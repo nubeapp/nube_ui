@@ -285,3 +285,38 @@ void deleteTmpCode(String email) async {
     throw Exception('The user with email $email was not found...');
   }
 }
+
+void storeUser(User user) async {
+  final response = await http.post(
+    Uri.parse('http://10.0.2.2:8000/users'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String?>{
+      'email': user.getEmail(),
+      'username': user.getUsername(),
+      'name': user.getName(),
+      'firstSurname': user.getFirstSurname(),
+      'secondSurname': user.getSecondSurname(),
+      'country': user.getCountry(),
+      'phone': user.getPhone(),
+      'password': user.getPassword()
+    }),
+  );
+
+  if (response.statusCode != 201) {
+    throw Exception('The user was not stored...');
+  }
+}
+
+Future<int> getUserByEmail(String email) async {
+  final response = await http.get(Uri.parse('http://10.0.2.2:8000/users/$email'));
+
+  return response.statusCode;
+}
+
+Future<int> getUserByUsername(String username) async {
+  final response = await http.get(Uri.parse('http://10.0.2.2:8000/users/username/$username'));
+
+  return response.statusCode;
+}

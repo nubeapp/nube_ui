@@ -29,17 +29,19 @@ class _DataRegisterScreenState extends State<DataRegisterScreen> {
   bool _isUsernameErrorVisible = false;
   bool _isNameErrorVisible = false;
   bool _isPhoneErrorVisible = false;
+  bool _isUsernameRegisteredError = false;
 
   List<bool> usernameNamePhoneValidator = List.empty();
 
   @override
   void initState() {
-    _usernameController.text = user.getUsername();
-    _nameController.text = user.getName();
-    _fSurnameController.text = user.getFirstSurname() ?? '';
-    _sSurnameController.text = user.getSecondSurname() ?? '';
-    _phoneController.text = user.getPhone();
-    _usernameFocus.addListener(() {});
+    _usernameFocus.addListener(() async {
+      if (await getUserByEmail(_usernameController.text) == 200) {
+        _isUsernameRegisteredError = true;
+      } else {
+        _isUsernameRegisteredError = false;
+      }
+    });
     _nameFocus.addListener(() {});
     _fSurnameFocus.addListener(() {});
     _sSurnameFocus.addListener(() {});
@@ -79,7 +81,7 @@ class _DataRegisterScreenState extends State<DataRegisterScreen> {
                   icon: Icons.arrow_back_ios_new_rounded,
                   onTap: () {
                     user.saveUserData(null, _usernameController.text, _nameController.text, _fSurnameController.text, _sSurnameController.text,
-                        ContainerCountryCodeNumber.countryName, _phoneController.text, null);
+                        ContainerCountryCodeNumber.country, _phoneController.text, null);
                     Navigator.of(context).pop();
                   }),
               SizedBox(
@@ -106,7 +108,7 @@ class _DataRegisterScreenState extends State<DataRegisterScreen> {
                 hintText: 'Nombre de usuario',
                 keyboardType: TextInputType.text,
                 obscureText: false,
-                hasError: _isUsernameErrorVisible,
+                hasError: _isUsernameErrorVisible || _isUsernameRegisteredError,
                 textInputAction: TextInputAction.done,
                 controller: _usernameController,
                 onChanged: (value) {
@@ -122,8 +124,10 @@ class _DataRegisterScreenState extends State<DataRegisterScreen> {
                 height: height(context) * 0.01,
               ),
               Opacity(
-                opacity: _isUsernameErrorVisible ? 1 : 0,
-                child: const ErrorMessage(message: "El nombre de usuario es obligatorio"),
+                opacity: _isUsernameErrorVisible ? 1 : (_isUsernameRegisteredError ? 1 : 0),
+                child: ErrorMessage(
+                    message:
+                        _isUsernameErrorVisible ? 'El nombre de usuario es obligatorio' : (_isUsernameRegisteredError ? 'El usuario ya está registrado' : '')),
               ),
               SizedBox(
                 width: width(context),
@@ -255,20 +259,21 @@ class _DataRegisterScreenState extends State<DataRegisterScreen> {
               ),
               Button(
                 text: 'Continuar',
-                onPressed: () {
+                onPressed: () async {
+                  bool isUsernameRegistered = await getUserByUsername(_usernameController.text) == 200;
                   setState(() {
                     usernameNamePhoneValidator = dataScreenValidator(_usernameController.text, _nameController.text, _phoneController.text);
                     _isUsernameErrorVisible = usernameNamePhoneValidator[0];
                     _isNameErrorVisible = usernameNamePhoneValidator[1];
                     _isPhoneErrorVisible = usernameNamePhoneValidator[2];
-                    if (!_isUsernameErrorVisible && !_isNameErrorVisible && !_isPhoneErrorVisible) {
+                    if (!_isUsernameErrorVisible && !_isNameErrorVisible && !_isPhoneErrorVisible && !isUsernameRegistered) {
+                      _isUsernameRegisteredError = false;
                       user.saveUserData(null, _usernameController.text, _nameController.text, _fSurnameController.text, _sSurnameController.text,
-                          ContainerCountryCodeNumber.countryName, _phoneController.text, null);
-                      Navigator.of(context).push(
-                        createRoute(
-                          const PasswordRegisterScreen(),
-                        ),
-                      );
+                          ContainerCountryCodeNumber.country, _phoneController.text, null);
+                      FocusManager.instance.primaryFocus?.unfocus();
+                      Navigator.of(context).push(createRoute(const PasswordRegisterScreen()));
+                    } else {
+                      _isUsernameRegisteredError = true;
                     }
                   });
                 },

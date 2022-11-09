@@ -4,7 +4,7 @@ class User {
   String name;
   String? firstSurname;
   String? secondSurname;
-  String countryName;
+  String country;
   String phone;
   String password;
 
@@ -14,7 +14,7 @@ class User {
     required this.name,
     this.firstSurname,
     this.secondSurname,
-    required this.countryName,
+    required this.country,
     required this.phone,
     required this.password,
   });
@@ -26,7 +26,7 @@ class User {
       name: json['name'] as String,
       firstSurname: json['firstSurname'] as String?,
       secondSurname: json['firstSurname'] as String?,
-      countryName: json['countryName'] as String,
+      country: json['country'] as String,
       phone: json['phone'] as String,
       password: json['password'] as String,
     );
@@ -38,7 +38,7 @@ class User {
         'name': name,
         'firstSurname': firstSurname,
         'secondSurname': secondSurname,
-        'countryName': countryName,
+        'countryName': country,
         'phone': phone,
         'password': password,
       };
@@ -63,8 +63,8 @@ class User {
     this.secondSurname = secondSurname;
   }
 
-  void setCountryName(String countryName) {
-    this.countryName = countryName;
+  void setCountry(String countryName) {
+    this.country = countryName;
   }
 
   void setPhone(String phone) {
@@ -95,8 +95,8 @@ class User {
     return secondSurname;
   }
 
-  String getCountryName() {
-    return countryName;
+  String getCountry() {
+    return country;
   }
 
   String getPhone() {
@@ -107,13 +107,13 @@ class User {
     return password;
   }
 
-  void saveUserData(String? email, String? username, String? name, String? fSurname, String? sSurname, String? countryName, String? phone, String? password) {
+  void saveUserData(String? email, String? username, String? name, String? fSurname, String? sSurname, String? country, String? phone, String? password) {
     setEmail(email ?? getEmail());
     setUsername(username ?? getUsername());
     setName(name ?? getName());
     setFirstSurname(fSurname ?? getFirstSurname());
     setSecondSurname(sSurname ?? getSecondSurname());
-    setCountryName(countryName ?? getCountryName());
+    setCountry(country ?? getCountry());
     setPhone(phone ?? getPhone());
     setPassword(password ?? getPassword());
   }
