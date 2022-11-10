@@ -3,6 +3,7 @@ export '../models/country.dart';
 export '../models/user.dart';
 
 /* Login Screen */
+export 'screens/login_screen/main_login_screen.dart';
 
 /* Register Screen */
 export 'screens/register_screen/main_register_screen.dart';

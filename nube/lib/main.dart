@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:nube/screens/login_screen/main_login_screen.dart';
 import '../imports.dart';
 
 List<Country> countries = List.empty(growable: true);
@@ -35,12 +36,13 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         // showPerformanceOverlay: true,
         routes: {
+          'login_screen': (context) => const MainLoginScreen(),
           'main_screen': (context) => const MainRegisterScreen(),
           'data_screen': (context) => const DataRegisterScreen(),
           'password_screen': (context) => const PasswordRegisterScreen(),
           'verification_screen': (context) => const VerificationRegisterScreen(),
         },
-        initialRoute: 'main_screen',
+        initialRoute: 'login_screen',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.light(),
         darkTheme: AppTheme.dark(),
