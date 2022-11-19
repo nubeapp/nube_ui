@@ -132,7 +132,7 @@ class _MainRegisterScreenState extends State<MainRegisterScreen> {
                     _isUserRegisteredError = false;
                     user.saveUserData(_emailController.text, null, null, null, null, null, null, null);
                     FocusManager.instance.primaryFocus?.unfocus();
-                    Navigator.of(context).push(createRoute(const DataRegisterScreen()));
+                    Navigator.of(context).push(createRouteFromRight(const DataRegisterScreen()));
                   } else if (isValidEmail(_emailController.text) && isUserRegistered) {
                     _isEmailErrorVisible = false;
                     _isUserRegisteredError = true;
@@ -213,7 +213,9 @@ class _MainRegisterScreenState extends State<MainRegisterScreen> {
                   width: width(context) * 0.015,
                 ),
                 GestureDetector(
-                  onTap: () => log("Iniciar sesión"),
+                  onTap: () {
+                    Navigator.of(context).push(createRouteFromLeft(const MainLoginScreen()));
+                  },
                   child: Text(
                     'Iniciar sesión',
                     style: TextStyle(

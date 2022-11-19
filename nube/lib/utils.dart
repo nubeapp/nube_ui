@@ -5,11 +5,29 @@ import 'imports.dart';
 import 'package:http/http.dart' as http;
 import 'dart:math' as math;
 
-Route createRoute(Widget route) {
+Route createRouteFromRight(Widget route) {
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) => route,
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       var begin = const Offset(1.0, 0.0);
+      var end = Offset.zero;
+      var curve = Curves.ease;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
+}
+
+Route createRouteFromLeft(Widget route) {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => route,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      var begin = const Offset(-1.0, 0.0);
       var end = Offset.zero;
       var curve = Curves.ease;
 
@@ -230,20 +248,25 @@ void connectAPI() async {
 }
 
 void storeTmpCode(String email, String code) async {
-  final response = await http.post(
-    Uri.parse('http://10.0.2.2:8000/tmpcodes'),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode(<String, String>{
-      'email': email,
-      'code': code,
-    }),
-  );
-
-  if (response.statusCode != 201) {
-    throw Exception('The code was not stored...');
+  try {
+    final response = await http.post(
+      Uri.parse('http://10.0.2.2:8000/tmpcodes/'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'email': email,
+        'code': code,
+      }),
+    );
+    if (response.statusCode != 201) {
+      throw Exception('The code was not stored...');
+    }
+  } on Exception catch (e) {
+    log(e.toString());
   }
+
+  //
 }
 
 void updateTmpCode(String email, String code) async {
@@ -267,7 +290,7 @@ Future<String> getTmpCode(String email) async {
   final response = await http.get(Uri.parse('http://10.0.2.2:8000/tmpcodes/$email'));
 
   if (response.statusCode == 200) {
-    return jsonDecode(response.body)["data"]["code"];
+    return jsonDecode(response.body)["code"];
   } else {
     throw Exception('The code for this user was not found...');
   }
@@ -286,9 +309,11 @@ void deleteTmpCode(String email) async {
   }
 }
 
+/// Working with User data
+
 void storeUser(User user) async {
   final response = await http.post(
-    Uri.parse('http://10.0.2.2:8000/users'),
+    Uri.parse('http://10.0.2.2:8000/users/'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },

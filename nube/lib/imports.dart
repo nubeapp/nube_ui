@@ -11,6 +11,9 @@ export 'screens/register_screen/data_register_screen.dart';
 export 'screens/register_screen/password_register_screen.dart';
 export 'screens/register_screen/verification_register_screen.dart';
 
+/* Main Screen */
+export 'screens/main_screen.dart';
+
 /* Widgets */
 export '../widgets/button.dart';
 export '../widgets/input_field.dart';

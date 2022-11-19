@@ -171,7 +171,7 @@ class _PasswordRegisterScreenState extends State<PasswordRegisterScreen> {
                   _isRPasswordErrorVisible = passwordValidator[1];
                   if (!_isPasswordErrorVisible && !_isRPasswordErrorVisible) {
                     user.saveUserData(null, null, null, null, null, null, null, _passwordController.text);
-                    Navigator.of(context).push(createRoute(const VerificationRegisterScreen()));
+                    Navigator.of(context).push(createRouteFromRight(const VerificationRegisterScreen()));
                   }
                 });
               },

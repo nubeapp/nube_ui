@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:nube/imports.dart';
 
 class MainLoginScreen extends StatefulWidget {
@@ -9,13 +10,13 @@ class MainLoginScreen extends StatefulWidget {
 }
 
 class _MainLoginScreenState extends State<MainLoginScreen> {
-  /*
-   *  Variables
-   */
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final FocusNode _emailFocus = FocusNode();
-  bool _isEmailErrorVisible = false;
-  bool _isUserRegisteredError = false;
+  final FocusNode _passwordFocus = FocusNode();
+  bool _isErrorVisible = false;
+  bool _isPasswordVisible = false;
+  int currentTab = 1;
 
   @override
   void initState() {
@@ -25,7 +26,9 @@ class _MainLoginScreenState extends State<MainLoginScreen> {
   @override
   void dispose() {
     _emailController.dispose();
+    _passwordController.dispose();
     _emailFocus.dispose();
+    _passwordFocus.dispose();
     super.dispose();
   }
 
@@ -72,12 +75,13 @@ class _MainLoginScreenState extends State<MainLoginScreen> {
             Text(
               'Inicia sesión para ver lo ocurrido mientras no estabas...',
               style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                  fontFamily: 'Tw Cen MT Regular',
-                  fontSize: 12.0,
-                  fontWeight: FontWeight.normal,
-                  letterSpacing: 1.0,
-                  height: 2),
+                color: Theme.of(context).primaryColor,
+                fontFamily: 'Tw Cen MT Regular',
+                fontSize: 12.0,
+                fontWeight: FontWeight.normal,
+                letterSpacing: 1.0,
+                height: 2,
+              ),
             ),
             SizedBox(
               width: width(context),
@@ -89,6 +93,72 @@ class _MainLoginScreenState extends State<MainLoginScreen> {
                 borderRadius: BorderRadius.circular(10.0),
                 color: Theme.of(context).cardColor,
               ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          if (currentTab == 2) {
+                            currentTab = 1;
+                          }
+                        });
+                      },
+                      child: Container(
+                        width: width(context) * 0.38,
+                        height: height(context) * 0.07,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: currentTab == 1 ? Theme.of(context).backgroundColor : Theme.of(context).cardColor,
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Correo electrónico',
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontFamily: 'Tw Cen MT Regular',
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.normal,
+                              letterSpacing: 1.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          if (currentTab == 1) {
+                            currentTab = 2;
+                          }
+                        });
+                      },
+                      child: Container(
+                        width: width(context) * 0.38,
+                        height: height(context) * 0.07,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: currentTab == 2 ? Theme.of(context).backgroundColor : Theme.of(context).cardColor,
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Nombre de usuario',
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontFamily: 'Tw Cen MT Regular',
+                              fontSize: 12.0,
+                              fontWeight: FontWeight.normal,
+                              letterSpacing: 1.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
             SizedBox(
               width: width(context),
@@ -96,8 +166,8 @@ class _MainLoginScreenState extends State<MainLoginScreen> {
             ),
             InputField(
               focusNode: _emailFocus,
-              hintText: 'Correo electrónico',
-              hasError: _isEmailErrorVisible || _isUserRegisteredError,
+              hintText: currentTab == 1 ? 'Correo electrónico' : 'Nombre de usuario',
+              hasError: _isErrorVisible,
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.done,
               obscureText: false,
@@ -111,36 +181,36 @@ class _MainLoginScreenState extends State<MainLoginScreen> {
               suffixIcon: hideShowIcon(_emailController, _emailFocus),
             ),
             SizedBox(
-              width: width(context),
-              height: height(context) * 0.01,
-            ),
-            SizedBox(
-              height: height(context) * 0.05,
+              height: height(context) * 0.06,
             ),
             InputField(
-              focusNode: _emailFocus,
+              focusNode: _passwordFocus,
               hintText: 'Contraseña',
-              hasError: _isEmailErrorVisible || _isUserRegisteredError,
-              keyboardType: TextInputType.emailAddress,
+              hasError: _isErrorVisible,
+              keyboardType: TextInputType.text,
               textInputAction: TextInputAction.done,
-              obscureText: false,
-              controller: _emailController,
+              obscureText: !_isPasswordVisible,
+              controller: _passwordController,
               onChanged: (value) {
                 setState(() {});
               },
               onPressed: () {
-                resetTextIfNoFocus(_emailController, _emailFocus);
+                setState(() {
+                  if (_passwordController.text.isNotEmpty) {
+                    _isPasswordVisible = !_isPasswordVisible;
+                  }
+                });
               },
-              suffixIcon: hideShowIcon(_emailController, _emailFocus),
+              suffixIcon: _passwordController.text.isNotEmpty ? (!_isPasswordVisible ? Icons.visibility_off_outlined : Icons.visibility_outlined) : null,
             ),
             SizedBox(
               width: width(context),
               height: height(context) * 0.04,
             ),
-            const Center(
+            Center(
               child: Opacity(
-                opacity: 0,
-                child: ErrorMessage(message: 'Los datos no son correctos'),
+                opacity: _isErrorVisible ? 1 : 0,
+                child: const ErrorMessage(message: 'Los datos no son correctos'),
               ),
             ),
             SizedBox(
@@ -149,20 +219,15 @@ class _MainLoginScreenState extends State<MainLoginScreen> {
             ),
             Button(
               text: 'Continuar',
-              onPressed: () async {
-                bool isUserRegistered = await getUserByEmail(_emailController.text) == 200;
+              onPressed: () {
+                // Comprobar que el user está en la BBDD. Si no está mostrar un error.
+                // Si está -> loguearlo y asignarlo como current_user
                 setState(() {
-                  if (isValidEmail(_emailController.text) && !isUserRegistered) {
-                    _isEmailErrorVisible = false;
-                    _isUserRegisteredError = false;
-                    user.saveUserData(_emailController.text, null, null, null, null, null, null, null);
-                    FocusManager.instance.primaryFocus?.unfocus();
-                    Navigator.of(context).push(createRoute(const DataRegisterScreen()));
-                  } else if (isValidEmail(_emailController.text) && isUserRegistered) {
-                    _isEmailErrorVisible = false;
-                    _isUserRegisteredError = true;
+                  if (isValidEmail(_emailController.text)) {
+                    _isErrorVisible = false;
+                    Navigator.of(context).push(createRouteFromRight(const MainScreen()));
                   } else {
-                    _isEmailErrorVisible = true;
+                    _isErrorVisible = true;
                   }
                 });
               },
@@ -238,7 +303,9 @@ class _MainLoginScreenState extends State<MainLoginScreen> {
                   width: width(context) * 0.015,
                 ),
                 GestureDetector(
-                  onTap: () => log("Registrarse"),
+                  onTap: () {
+                    Navigator.of(context).push(createRouteFromRight(const MainRegisterScreen()));
+                  },
                   child: Text(
                     'Crear cuenta',
                     style: TextStyle(

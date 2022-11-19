@@ -796,6 +796,7 @@ class _VerificationRegisterScreenState extends State<VerificationRegisterScreen>
                             log("Se va a registrar al usuario");
                             storeUser(user);
                             deleteTmpCode(user.email);
+                            Navigator.of(context).push(createRouteFromRight(const MainScreen()));
                           }
                         });
                       },

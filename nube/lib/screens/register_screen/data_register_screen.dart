@@ -271,7 +271,7 @@ class _DataRegisterScreenState extends State<DataRegisterScreen> {
                       user.saveUserData(null, _usernameController.text, _nameController.text, _fSurnameController.text, _sSurnameController.text,
                           ContainerCountryCodeNumber.country, _phoneController.text, null);
                       FocusManager.instance.primaryFocus?.unfocus();
-                      Navigator.of(context).push(createRoute(const PasswordRegisterScreen()));
+                      Navigator.of(context).push(createRouteFromRight(const PasswordRegisterScreen()));
                     } else {
                       _isUsernameRegisteredError = true;
                     }
