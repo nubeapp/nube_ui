@@ -219,11 +219,12 @@ class _MainLoginScreenState extends State<MainLoginScreen> {
             ),
             Button(
               text: 'Continuar',
-              onPressed: () {
+              onPressed: () async {
                 // Comprobar que el user está en la BBDD. Si no está mostrar un error.
+                bool userExists = await loginEmail(_emailController.text, _passwordController.text);
                 // Si está -> loguearlo y asignarlo como current_user
                 setState(() {
-                  if (isValidEmail(_emailController.text)) {
+                  if (isValidEmail(_emailController.text) && userExists) {
                     _isErrorVisible = false;
                     Navigator.of(context).push(createRouteFromRight(const MainScreen()));
                   } else {

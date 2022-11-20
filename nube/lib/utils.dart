@@ -345,3 +345,24 @@ Future<int> getUserByUsername(String username) async {
 
   return response.statusCode;
 }
+
+Future<bool> loginEmail(String email, String password) async {
+  try {
+    final response = await http.post(
+      Uri.parse('http://10.0.2.2:8000/loginemail'),
+      body: {
+        'username': email,
+        'password': password,
+      },
+    );
+    log(response.body);
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      throw Exception('The user was not found');
+    }
+  } on Exception catch (e) {
+    log(e.toString());
+  }
+  return false;
+}
