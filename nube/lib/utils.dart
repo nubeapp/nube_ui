@@ -243,14 +243,14 @@ String generateOTP(int length) {
 /// Working with TmpCode data
 
 void connectAPI() async {
-  final response = await http.get(Uri.parse('http://10.0.2.2:8000'));
+  final response = await http.get(Uri.parse('http://192.168.1.101:8000'));
   log(response.body);
 }
 
 void storeTmpCode(String email, String code) async {
   try {
     final response = await http.post(
-      Uri.parse('http://10.0.2.2:8000/tmpcodes/'),
+      Uri.parse('http://192.168.1.101:8000/tmpcodes/'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -271,7 +271,7 @@ void storeTmpCode(String email, String code) async {
 
 void updateTmpCode(String email, String code) async {
   final response = await http.put(
-    Uri.parse('http://10.0.2.2:8000/tmpcodes/$email'),
+    Uri.parse('http://192.168.1.101:8000/tmpcodes/$email'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -287,7 +287,7 @@ void updateTmpCode(String email, String code) async {
 }
 
 Future<String> getTmpCode(String email) async {
-  final response = await http.get(Uri.parse('http://10.0.2.2:8000/tmpcodes/$email'));
+  final response = await http.get(Uri.parse('http://192.168.1.101:8000/tmpcodes/$email'));
 
   if (response.statusCode == 200) {
     return jsonDecode(response.body)["code"];
@@ -298,7 +298,7 @@ Future<String> getTmpCode(String email) async {
 
 void deleteTmpCode(String email) async {
   final response = await http.delete(
-    Uri.parse('http://10.0.2.2:8000/tmpcodes/$email'),
+    Uri.parse('http://192.168.1.101:8000/tmpcodes/$email'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -313,7 +313,7 @@ void deleteTmpCode(String email) async {
 
 void storeUser(User user) async {
   final response = await http.post(
-    Uri.parse('http://10.0.2.2:8000/users/'),
+    Uri.parse('http://192.168.1.101:8000/users/'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -335,13 +335,13 @@ void storeUser(User user) async {
 }
 
 Future<int> getUserByEmail(String email) async {
-  final response = await http.get(Uri.parse('http://10.0.2.2:8000/users/$email'));
+  final response = await http.get(Uri.parse('http://192.168.1.101:8000/users/$email'));
 
   return response.statusCode;
 }
 
 Future<int> getUserByUsername(String username) async {
-  final response = await http.get(Uri.parse('http://10.0.2.2:8000/users/username/$username'));
+  final response = await http.get(Uri.parse('http://192.168.1.101:8000/users/username/$username'));
 
   return response.statusCode;
 }
@@ -349,7 +349,7 @@ Future<int> getUserByUsername(String username) async {
 Future<bool> loginEmail(String email, String password) async {
   try {
     final response = await http.post(
-      Uri.parse('http://10.0.2.2:8000/loginemail'),
+      Uri.parse('http://192.168.1.101:8000/loginemail'),
       body: {
         'username': email,
         'password': password,
