@@ -5,6 +5,7 @@ class ContainerCountryCodeNumber extends StatefulWidget {
   const ContainerCountryCodeNumber({super.key});
 
   static String country = 'Spain';
+  static String countryCode = 'ES';
 
   @override
   State<ContainerCountryCodeNumber> createState() => _ContainerCountryCodeNumberState(country);
@@ -48,6 +49,7 @@ class _ContainerCountryCodeNumberState extends State<ContainerCountryCodeNumber>
               for (int i = 0; i < countries.length; i++) {
                 if (country == countries[i].name) {
                   initialIndex = i;
+                  ContainerCountryCodeNumber.countryCode = countries[i].isoCode;
                 }
               }
             });

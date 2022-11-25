@@ -30,13 +30,14 @@ class _DataRegisterScreenState extends State<DataRegisterScreen> {
   bool _isNameErrorVisible = false;
   bool _isPhoneErrorVisible = false;
   bool _isUsernameRegisteredError = false;
+  bool _isPhoneNotValidErrorVisible = false;
 
   List<bool> usernameNamePhoneValidator = List.empty();
 
   @override
   void initState() {
     _usernameFocus.addListener(() async {
-      if (await getUserByEmail(_usernameController.text) == 200) {
+      if (await getUserByUsername(_usernameController.text) == 200) {
         _isUsernameRegisteredError = true;
       } else {
         _isUsernameRegisteredError = false;
@@ -223,7 +224,7 @@ class _DataRegisterScreenState extends State<DataRegisterScreen> {
                       hintText: 'Teléfono móvil',
                       keyboardType: TextInputType.phone,
                       obscureText: false,
-                      hasError: _isPhoneErrorVisible,
+                      hasError: _isPhoneErrorVisible || _isPhoneNotValidErrorVisible,
                       textInputAction: TextInputAction.done,
                       controller: _phoneController,
                       onChanged: (value) {
@@ -248,8 +249,14 @@ class _DataRegisterScreenState extends State<DataRegisterScreen> {
                     height: height(context) * 0.01,
                   ),
                   Opacity(
-                    opacity: _isPhoneErrorVisible ? 1 : 0,
-                    child: const ErrorMessage(message: "El teléfono móvil es obligatorio"),
+                    opacity: _isPhoneErrorVisible
+                        ? 1
+                        : _isPhoneNotValidErrorVisible
+                            ? 1
+                            : 0,
+                    child: ErrorMessage(
+                        message:
+                            _isPhoneErrorVisible ? "El teléfono móvil es obligatorio" : (_isPhoneNotValidErrorVisible ? 'El teléfono móvil no es válido' : '')),
                   ),
                 ],
               ),
@@ -261,18 +268,25 @@ class _DataRegisterScreenState extends State<DataRegisterScreen> {
                 text: 'Continuar',
                 onPressed: () async {
                   bool isUsernameRegistered = await getUserByUsername(_usernameController.text) == 200;
+                  bool isValidPhone = await validatePhone(_phoneController.text, ContainerCountryCodeNumber.countryCode);
+                  log('$isValidPhone');
                   setState(() {
                     usernameNamePhoneValidator = dataScreenValidator(_usernameController.text, _nameController.text, _phoneController.text);
                     _isUsernameErrorVisible = usernameNamePhoneValidator[0];
                     _isNameErrorVisible = usernameNamePhoneValidator[1];
                     _isPhoneErrorVisible = usernameNamePhoneValidator[2];
-                    if (!_isUsernameErrorVisible && !_isNameErrorVisible && !_isPhoneErrorVisible && !isUsernameRegistered) {
+                    _isPhoneNotValidErrorVisible = !isValidPhone;
+                    if (!_isUsernameErrorVisible && !_isNameErrorVisible && !_isPhoneErrorVisible && !isUsernameRegistered && !_isPhoneNotValidErrorVisible) {
                       _isUsernameRegisteredError = false;
                       user.saveUserData(null, _usernameController.text, _nameController.text, _fSurnameController.text, _sSurnameController.text,
                           ContainerCountryCodeNumber.country, _phoneController.text, null);
                       FocusManager.instance.primaryFocus?.unfocus();
                       Navigator.of(context).push(createRouteFromRight(const PasswordRegisterScreen()));
-                    } else {
+                    } else if (!_isUsernameErrorVisible &&
+                        !_isNameErrorVisible &&
+                        !_isPhoneErrorVisible &&
+                        !isUsernameRegistered &&
+                        !_isPhoneNotValidErrorVisible) {
                       _isUsernameRegisteredError = true;
                     }
                   });

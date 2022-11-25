@@ -366,3 +366,27 @@ Future<bool> loginEmail(String email, String password) async {
   }
   return false;
 }
+
+// Working with phone validation
+
+Future<bool> validatePhone(String phone, String countryCode) async {
+  try {
+    final response = await http.post(
+      Uri.parse('https://neutrinoapi.net/phone-validate'),
+      body: {
+        'user-id': 'lopzmnc',
+        'api-key': 'sqt1b0OvwYwNrXxoc3XWJvzUQjT70S5yKGUeETlC0rUqKFi0',
+        'number': phone,
+        'country-code': countryCode,
+      },
+    );
+    if (jsonDecode(response.body)['valid'] == true) {
+      return true;
+    } else {
+      throw Exception('The phone number is not valid');
+    }
+  } on Exception catch (e) {
+    log(e.toString());
+  }
+  return false;
+}
