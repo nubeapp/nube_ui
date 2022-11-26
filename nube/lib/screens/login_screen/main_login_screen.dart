@@ -9,7 +9,7 @@ class MainLoginScreen extends StatefulWidget {
   State<MainLoginScreen> createState() => _MainLoginScreenState();
 }
 
-class _MainLoginScreenState extends State<MainLoginScreen> {
+class _MainLoginScreenState extends State<MainLoginScreen> with TickerProviderStateMixin {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final FocusNode _emailFocus = FocusNode();
@@ -17,10 +17,17 @@ class _MainLoginScreenState extends State<MainLoginScreen> {
   bool _isErrorVisible = false;
   bool _isPasswordVisible = false;
   int currentTab = 1;
+  late Animation<double> animation;
+  late AnimationController animationController;
 
   @override
   void initState() {
     super.initState();
+    animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 200));
+    animation = Tween<double>(begin: 0, end: 0).animate(animationController)
+      ..addListener(() {
+        setState(() {});
+      });
   }
 
   @override
@@ -34,6 +41,7 @@ class _MainLoginScreenState extends State<MainLoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    animation = Tween<double>(begin: 0, end: width(context) * 0.405).animate(animationController);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Padding(
@@ -43,7 +51,7 @@ class _MainLoginScreenState extends State<MainLoginScreen> {
           children: [
             SizedBox(
               width: width(context),
-              height: height(context) * 0.05,
+              height: height(context) * 0.1,
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -89,75 +97,92 @@ class _MainLoginScreenState extends State<MainLoginScreen> {
             ),
             Container(
               height: height(context) * 0.1,
+              width: width(context),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
                 color: Theme.of(context).cardColor,
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          if (currentTab == 2) {
-                            currentTab = 1;
-                          }
-                        });
-                      },
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: width(context) * 0.035, right: width(context) * 0.03, top: height(context) * 0.016, bottom: height(context) * 0.01),
+                    child: Transform.translate(
+                      offset: Offset(animation.value, 0),
                       child: Container(
                         width: width(context) * 0.38,
                         height: height(context) * 0.07,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10.0),
-                          color: currentTab == 1 ? Theme.of(context).backgroundColor : Theme.of(context).cardColor,
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Correo electrónico',
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontFamily: 'Tw Cen MT Regular',
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.normal,
-                              letterSpacing: 1.0,
-                            ),
-                          ),
+                          color: Theme.of(context).backgroundColor,
                         ),
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          if (currentTab == 1) {
-                            currentTab = 2;
-                          }
-                        });
-                      },
-                      child: Container(
-                        width: width(context) * 0.38,
-                        height: height(context) * 0.07,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.0),
-                          color: currentTab == 2 ? Theme.of(context).backgroundColor : Theme.of(context).cardColor,
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Nombre de usuario',
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontFamily: 'Tw Cen MT Regular',
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.normal,
-                              letterSpacing: 1.0,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: width(context) * 0.03, right: width(context) * 0.02, top: height(context) * 0.016, bottom: height(context) * 0.01),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () {
+                            setState(() {
+                              if (currentTab == 2) {
+                                animationController.reverse();
+                                currentTab = 1;
+                              }
+                            });
+                          },
+                          child: Container(
+                            width: width(context) * 0.38,
+                            height: height(context) * 0.07,
+                            child: Center(
+                              child: Text(
+                                'Correo electrónico',
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontFamily: 'Tw Cen MT Regular',
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.normal,
+                                  letterSpacing: 1.0,
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
+                        GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () {
+                            setState(() {
+                              if (currentTab == 1) {
+                                animationController.forward();
+                                currentTab = 2;
+                              }
+                            });
+                          },
+                          child: Container(
+                            width: width(context) * 0.38,
+                            height: height(context) * 0.07,
+                            child: Center(
+                              child: Text(
+                                'Nombre de usuario',
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontFamily: 'Tw Cen MT Regular',
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.normal,
+                                  letterSpacing: 1.0,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             SizedBox(
@@ -235,54 +260,54 @@ class _MainLoginScreenState extends State<MainLoginScreen> {
             ),
             SizedBox(
               width: width(context),
-              height: height(context) * 0.03,
+              height: height(context) * 0.01,
             ),
-            Row(
-              children: [
-                const Expanded(
-                  child: Divider(
-                    thickness: 2.0,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Text(
-                    "Iniciar sesión con Google o Facebook",
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontFamily: 'Tw Cen MT Regular',
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w500,
-                      letterSpacing: 1.0,
-                    ),
-                  ),
-                ),
-                const Expanded(
-                  child: Divider(
-                    thickness: 2.0,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              width: width(context),
-              height: height(context) * 0.03,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SocialMediaButton(
-                  asset: 'assets/images/google-icon.png',
-                  socialMediaText: 'Google',
-                  onTap: () => log('Google'),
-                ),
-                SocialMediaButton(
-                  asset: 'assets/images/facebook-icon.png',
-                  socialMediaText: 'Facebook',
-                  onTap: () => log('Facebook'),
-                ),
-              ],
-            ),
+            // Row(
+            //   children: [
+            //     const Expanded(
+            //       child: Divider(
+            //         thickness: 2.0,
+            //       ),
+            //     ),
+            //     Padding(
+            //       padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            //       child: Text(
+            //         "Iniciar sesión con Google o Facebook",
+            //         style: TextStyle(
+            //           color: Theme.of(context).primaryColor,
+            //           fontFamily: 'Tw Cen MT Regular',
+            //           fontSize: 12.0,
+            //           fontWeight: FontWeight.w500,
+            //           letterSpacing: 1.0,
+            //         ),
+            //       ),
+            //     ),
+            //     const Expanded(
+            //       child: Divider(
+            //         thickness: 2.0,
+            //       ),
+            //     ),
+            //   ],
+            // ),
+            // SizedBox(
+            //   width: width(context),
+            //   height: height(context) * 0.03,
+            // ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     SocialMediaButton(
+            //       asset: 'assets/images/google-icon.png',
+            //       socialMediaText: 'Google',
+            //       onTap: () => log('Google'),
+            //     ),
+            //     SocialMediaButton(
+            //       asset: 'assets/images/facebook-icon.png',
+            //       socialMediaText: 'Facebook',
+            //       onTap: () => log('Facebook'),
+            //     ),
+            //   ],
+            // ),
             SizedBox(
               width: width(context),
               height: height(context) * 0.025,
@@ -304,6 +329,7 @@ class _MainLoginScreenState extends State<MainLoginScreen> {
                   width: width(context) * 0.015,
                 ),
                 GestureDetector(
+                  behavior: HitTestBehavior.opaque,
                   onTap: () {
                     Navigator.of(context).push(createRouteFromRight(const MainRegisterScreen()));
                   },
@@ -322,7 +348,7 @@ class _MainLoginScreenState extends State<MainLoginScreen> {
             ),
             SizedBox(
               width: width(context),
-              height: height(context) * 0.02,
+              height: height(context) * 0.18,
             ),
             const Center(
               child: Image(

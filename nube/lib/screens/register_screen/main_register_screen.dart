@@ -47,7 +47,7 @@ class _MainRegisterScreenState extends State<MainRegisterScreen> {
           children: [
             SizedBox(
               width: width(context),
-              height: height(context) * 0.14,
+              height: height(context) * 0.2,
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -144,54 +144,54 @@ class _MainRegisterScreenState extends State<MainRegisterScreen> {
             ),
             SizedBox(
               width: width(context),
-              height: height(context) * 0.1,
+              height: height(context) * 0.01,
             ),
-            Row(
-              children: [
-                const Expanded(
-                  child: Divider(
-                    thickness: 2.0,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Text(
-                    "Registrarse con Google o Facebook",
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontFamily: 'Tw Cen MT Regular',
-                      fontSize: 12.0,
-                      fontWeight: FontWeight.w500,
-                      letterSpacing: 1.0,
-                    ),
-                  ),
-                ),
-                const Expanded(
-                  child: Divider(
-                    thickness: 2.0,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              width: width(context),
-              height: height(context) * 0.02,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SocialMediaButton(
-                  asset: 'assets/images/google-icon.png',
-                  socialMediaText: 'Google',
-                  onTap: () => log('Google'),
-                ),
-                SocialMediaButton(
-                  asset: 'assets/images/facebook-icon.png',
-                  socialMediaText: 'Facebook',
-                  onTap: () => log('Facebook'),
-                ),
-              ],
-            ),
+            // Row(
+            //   children: [
+            //     const Expanded(
+            //       child: Divider(
+            //         thickness: 2.0,
+            //       ),
+            //     ),
+            //     Padding(
+            //       padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            //       child: Text(
+            //         "Registrarse con Google o Facebook",
+            //         style: TextStyle(
+            //           color: Theme.of(context).primaryColor,
+            //           fontFamily: 'Tw Cen MT Regular',
+            //           fontSize: 12.0,
+            //           fontWeight: FontWeight.w500,
+            //           letterSpacing: 1.0,
+            //         ),
+            //       ),
+            //     ),
+            //     const Expanded(
+            //       child: Divider(
+            //         thickness: 2.0,
+            //       ),
+            //     ),
+            //   ],
+            // ),
+            // SizedBox(
+            //   width: width(context),
+            //   height: height(context) * 0.02,
+            // ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     SocialMediaButton(
+            //       asset: 'assets/images/google-icon.png',
+            //       socialMediaText: 'Google',
+            //       onTap: () => log('Google'),
+            //     ),
+            //     SocialMediaButton(
+            //       asset: 'assets/images/facebook-icon.png',
+            //       socialMediaText: 'Facebook',
+            //       onTap: () => log('Facebook'),
+            //     ),
+            //   ],
+            // ),
             SizedBox(
               width: width(context),
               height: height(context) * 0.025,
@@ -213,6 +213,7 @@ class _MainRegisterScreenState extends State<MainRegisterScreen> {
                   width: width(context) * 0.015,
                 ),
                 GestureDetector(
+                  behavior: HitTestBehavior.opaque,
                   onTap: () {
                     Navigator.of(context).push(createRouteFromLeft(const MainLoginScreen()));
                   },
@@ -231,7 +232,7 @@ class _MainRegisterScreenState extends State<MainRegisterScreen> {
             ),
             SizedBox(
               width: width(context),
-              height: height(context) * 0.12,
+              height: height(context) * 0.32,
             ),
             const Center(
               child: Image(
